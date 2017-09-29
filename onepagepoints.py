@@ -25,9 +25,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 adjust_defense_cost = 0.8
 adjust_attack_cost = 0.8
 
-# Cost per defense point (2+ => 4, 6+ => 22, 10+ => 56)
+# Cost per defense point (2+ => 6, 6+ => 24, 10+ => 58)
 def defense_cost(d):
-    return (d * d + d + 2) / 2
+    return (d * d + d + 6) / 2
 
 # defense cost multiplier (higher quality units are tougher, due to moral test)
 # 1 for 2+ quality, 0.6 for 6+ quality
@@ -103,7 +103,7 @@ class Weapon:
             self.cost = sfactor * self.attacks * range_cost(self.range, speed) * (ap_cost(self.armorPiercing) * quality_attack_factor(quality) + rending)
             # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
             self.cost += 0.5 * simpact * sfactor * ap_cost(self.armorPiercing) * range_cost(self.range, speed)
-            self.cost = int(self.cost * adjust_attack_cost)
+            self.cost = round(self.cost * adjust_attack_cost)
             return self.cost
 
 class Unit:
@@ -130,7 +130,7 @@ class Unit:
 
         pretty += ', '.join(self.specialRules)
         pretty += '\n\t'
-        pretty += 'defense {0} pts, attack {1} pts, other {2} pts'.format(self.defenseCost, self.attackCost, self.otherCost)
+        pretty += 'defense {0} pts, attack {1} pts, other {2} pts\n'.format(self.defenseCost, self.attackCost, self.otherCost)
 
         return pretty
 
@@ -145,20 +145,20 @@ class Unit:
         for w in self.weapons:
             self.attackCost += w.Cost(self.speed, quality)
 
-        self.attackCost = int(self.attackCost)
+        self.attackCost = round(self.attackCost)
 
     def defenseCost(self):
         self.defenseCost = quality_defense_factor(self.quality) * defense_cost(self.defense) * self.tough
         # include speed to defense cost. hardened target which move fast are critical to control objectives.
         self.defenseCost *= (self.speed + 24) / (36)
         self.defenseCost *= adjust_defense_cost
-        self.defenseCost = int(self.defenseCost)
+        self.defenseCost = round(self.defenseCost)
 
     # attack and defense cost should already be computed
     def otherCost(self):
         self.otherCost = self.globalAdd
         self.otherCost += (self.otherCost + self.attackCost + self.defenseCost) * self.globalMultiplier
-        self.otherCost = int(self.otherCost)
+        self.otherCost = round(self.otherCost)
 
     def Cost(self):
         self.defenseCost()
