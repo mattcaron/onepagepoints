@@ -52,7 +52,7 @@ def parse_equipment(equipment):
 
         for c in w[1].split(','):
             c = c.strip()
-            if c.endswith('”'):
+            if c.endswith('"'):
                 wprange = int(c[:-1])
             elif c.startswith('AP'):
                 armorPiercing = int(c[3:-1])
