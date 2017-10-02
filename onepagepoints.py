@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Copyright 2017 Jocelyn Falempe kdj0c@djinvi.net
@@ -27,17 +27,17 @@ adjust_attack_cost = 0.8
 
 # Cost per defense point (2+ => 6, 6+ => 24, 10+ => 58)
 def defense_cost(d):
-    return (d * d + d + 6) / 2
+    return (d * d + d + 6.0) / 2.0
 
 # defense cost multiplier (higher quality units are tougher, due to moral test)
 # 1 for 2+ quality, 0.6 for 6+ quality
 def quality_defense_factor(q):
-    return 1 - 0.1 * (q - 2)
+    return 1.0 - 0.1 * (q - 2.0)
 
 # Attack cost multiplier, probability to hit according to quality
 # 5/6 for 2+, 1/6 for 6+
 def quality_attack_factor(q):
-    return (7 - q) / 6
+    return (7.0 - q) / 6.0
 
 # AP cost multiplier.
 # 1 for no AP, * 1.2 for each AP point
@@ -71,8 +71,10 @@ class Weapon:
             s = ''
         s += self.name + " ("
         if self.range > 0:
-            s += str(self.range) + '", '
-        s += 'A{0}, AP({1})'.format(self.attacks, self.armorPiercing)
+            s += '{0}", '.format(self.range)
+        s += 'A{0}'.format(self.attacks)
+        if self.armorPiercing:
+            s += ', AP({0})'.format(self.armorPiercing)
         if self.specialRules:
             s += ', ' + ', '.join(self.specialRules)
         s += ')'
@@ -103,7 +105,9 @@ class Weapon:
             self.cost = sfactor * self.attacks * range_cost(self.range, speed) * (ap_cost(self.armorPiercing) * quality_attack_factor(quality) + rending)
             # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
             self.cost += 0.5 * simpact * sfactor * ap_cost(self.armorPiercing) * range_cost(self.range, speed)
-            self.cost = round(self.cost * adjust_attack_cost)
+
+            self.cost = int(round(self.cost * adjust_attack_cost))
+
             return self.cost
 
 class Unit:
@@ -113,11 +117,7 @@ class Unit:
         self.weapons = weapons
         self.quality = quality
         self.defense = defense
-        self.speed = 12
-        self.globalAdd = 0
-        self.globalMultiplier = 0
         self.count = count
-        self.tough = 1
 
         self.parseSpecialRules()
         self.Cost()
@@ -134,41 +134,60 @@ class Unit:
 
         return pretty
 
-    def AddWeapon(self, weapon):
-        self.weapons.append(weapon)
+    def __copy__(self):
+        return Unit(self.name, self.count, self.quality, self.defense, self.weapons.copy(), self.specialRules.copy())
 
-    def attackCost(self):
+    def AddWeapon(self, weapons):
+        self.weapons += weapons
+        self.Cost()
+
+    def AddSpecial(self, special):
+        self.specialRules += special
+        self.parseSpecialRules()
+        self.Cost()
+
+    def SetCount(self, count):
+        self.count = count
+        self.Cost()
+
+    def AttackCost(self):
         self.attackCost = 0
         quality = self.quality
         if 'good shot' in self.specialRules:
             quality = 4
         for w in self.weapons:
-            self.attackCost += w.Cost(self.speed, quality)
+            self.attackCost += w.Cost(self.speed, quality) * self.count
 
-        self.attackCost = round(self.attackCost)
+        self.attackCost = int(round(self.attackCost))
 
-    def defenseCost(self):
+    def DefenseCost(self):
         self.defenseCost = quality_defense_factor(self.quality) * defense_cost(self.defense) * self.tough
         # include speed to defense cost. hardened target which move fast are critical to control objectives.
         self.defenseCost *= (self.speed + 24) / (36)
-        self.defenseCost *= adjust_defense_cost
-        self.defenseCost = round(self.defenseCost)
+        self.defenseCost *= adjust_defense_cost * self.count
+        self.defenseCost = int(round(self.defenseCost))
 
     # attack and defense cost should already be computed
-    def otherCost(self):
+    def OtherCost(self):
         self.otherCost = self.globalAdd
         self.otherCost += (self.otherCost + self.attackCost + self.defenseCost) * self.globalMultiplier
-        self.otherCost = round(self.otherCost)
+        self.otherCost = int(round(self.otherCost))
 
     def Cost(self):
-        self.defenseCost()
-        self.attackCost()
-        self.otherCost()
+        self.DefenseCost()
+        self.AttackCost()
+        self.OtherCost()
 
-        self.cost = (self.defenseCost + self.attackCost + self.otherCost) * self.count
+        self.cost = self.defenseCost + self.attackCost + self.otherCost
+        return self.cost
 
 
     def parseSpecialRules(self):
+        self.speed = 12
+        self.globalAdd = 0
+        self.globalMultiplier = 0
+        self.tough = 1
+
         if 'vehicle' in self.specialRules or 'monster' in self.specialRules:
             smallStomp = Weapon('Monster Stomp', specialRules=['impact(3)'])
             self.AddWeapon(smallStomp)
@@ -203,6 +222,10 @@ class Unit:
             self.globalAdd += 30
         if 'volley fire' in self.specialRules:
             self.globalAdd += 30
+        if 'Beacon' in self.specialRules:
+            self.globalAdd += 10
+        if 'Inhibitor' in self.specialRules:
+            self.globalAdd += 10
         if 'fear' in self.specialRules:
             self.globalAdd += 5
         if 'strider' in self.specialRules:

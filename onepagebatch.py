@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Copyright 2017 Jocelyn Falempe kdj0c@djinvi.net
@@ -23,93 +23,77 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 from onepagepoints import *
-from pyexcel_ods3 import get_data, save_data
+import json
+import os
+import copy
 
-# Parse the equipment list to find characteristics of individual weapons
-def parse_equipment(equipment):
-    nested = 0
-    weapons_raw = []
-    weapons = []
-    namestart = 0
-    for index, char in enumerate(equipment):
-        if char == '(':
-            if nested == 0:
-                start = index
-            nested += 1
-        elif char == ')':
-            nested -= 1
-            if nested == 0:
-                weapons_raw.append((equipment[namestart:start].strip(' ,'),equipment[start + 1:index]))
-                namestart = index + 1
+# Calculate the cost of an upgrade on a unit
+# Set unit count to 1, to add only one weapon to the squad
+def calculate_add_cost(unit, upgrade):
+    for up in upgrade:
+        new_unit = copy.copy(unit)
+        new_unit.SetCount(1)
+        prev_cost = new_unit.cost
+        if 'weapons' in up:
+            new_weapons = [getWeapon(w) for w in up['weapons']]
+            new_unit.AddWeapon(new_weapons)
+        if 'special' in up:
+            new_unit.AddSpecial(up['special'])
+        up_cost = new_unit.cost - prev_cost
+        if 'cost' in up:
+            up['cost'].append(up_cost)
+        else:
+            up['cost'] = [up_cost]
 
-    for w in weapons_raw:
-        name = w[0]
-        wprange = 0
-        armorPiercing= 0
-        attacks = 0
-        special = []
-        count = 1
+def calculate_upgrade_group_cost(unit, upgrade_group):
+    for up in upgrade_group:
+        if up['cmd'] == 'add':
+            calculate_add_cost(unit, up['list'])
 
-        for c in w[1].split(','):
-            c = c.strip()
-            if c.endswith('"'):
-                wprange = int(c[:-1])
-            elif c.startswith('AP'):
-                armorPiercing = int(c[3:-1])
-            elif c.startswith('A') and c[1:].isdigit():
-                attacks = int(c[1:])
-            else:
-                special.append(c.lower().strip())
+def getWeapon(name):
+    global weapons
+    for w in weapons:
+        if w.name == name:
+            return w
+    print('Error weapon {0} Not found !'.format(name))
+    return None
 
-        if 'linked' in name.lower().split():
-            if not 'linked' in special:
-                special.append('linked')
+def calculate_unit_cost(junit, jupgrades):
+    global weapons
 
-        # check for 2x or Nx if the same wepon is preset twice or more
-        firstword = name.lower().split()[0]
-        if firstword.endswith('x'):
-            if firstword[:-1].isdigit():
-                count = int(firstword[:-1])
-                # remove 2x from the name
-                name = name[len(firstword) + 1:]
+    unit_weapon = [getWeapon(w) for w in junit['equipment']]
 
-        new_weapon = Weapon(name, wprange, attacks, armorPiercing, special)
-        for i in range(count):
-            weapons.append(new_weapon)
-    return weapons
+    unit = Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_weapon, junit['special'])
 
-def parse_special(special):
-    special = special.lower().split(',')
-    # strip all whitespace
-    return [sp.strip() for sp in special]
+    up = junit['upgrades']
+    for upgrade_group in junit['upgrades']:
+        if upgrade_group in jupgrades:
+            calculate_upgrade_group_cost(unit, jupgrades[upgrade_group])
+        else:
+            print("Missing upgrade_group {0} in upgrades.json".format(upgrade_group))
+
 
 def main():
+    global weapons
 
-    column_order = ['name', 'count', 'qua', 'def', 'equipment', 'special']
+    faction = "Tao"
 
-    data = get_data("Tao_spec.ods")
+    with open(os.path.join(faction, "weapons.json"), "r") as f:
+        jweapons = json.loads(f.read())
 
-    for sheet in data:
-        for row in data[sheet][1:]:
-            dunit = {}
-            if len(row) < len(column_order):
-                continue
+    weapons = [Weapon(w, jweapons[w]['range'], jweapons[w]['attacks'], jweapons[w]['ap'], jweapons[w]['special']) for w in jweapons]
 
-            for i, col in enumerate(column_order):
-                dunit[col] = row[i]
+    with open(os.path.join(faction, "units1.json"), "r") as f:
+        junits = json.loads(f.read())
 
-            weapons = parse_equipment(dunit['equipment'])
-            special = parse_special(dunit['special'])
+    with open(os.path.join(faction, "upgrades1.json"), "r") as f:
+        jupgrades = json.loads(f.read())
 
-            unit = Unit(dunit['name'], dunit['count'], dunit['qua'], dunit['def'], weapons, special)
-            print(unit)
+    for junit in junits:
+        calculate_unit_cost(junit, jupgrades)
 
-            if len(row) == 8:
-                row.append(unit.cost)
-            else:
-                row[8] = unit.cost
+    print(jupgrades)
 
-    save_data("Tao_spec_new.ods", data)
 
 if __name__ == "__main__":
     # execute only if run as a script
