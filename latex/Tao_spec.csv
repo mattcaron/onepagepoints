@@ -1,0 +1,10 @@
+Name [size] ;Count;Qua ;Def ;Equipment ;Special Rules ;Upgrade;Cost;New cost;cost change
+Hover Transport;1;4;7;Gatling Carbine (18”, A4, AP(1)),\newline 2x Linked Pulse Carbines (18”, A2, AP(1));Fast, Strider, Tough(3), Vehicle, Transport(11);A, B, C ;130;148;13,85 %
+Hover Tank;1;4;8;Railgun (48”, A1, AP(6), Deadly),2x Linked Pulse Carbines (18”, A2, AP(1));Fast, Strider, Tough(6), Vehicle;A, B, C, D ;240;302;25,83 %
+Hover Attack Bike;1;4;6;Gatling Carbine (18”, A4, AP(1)),2x Linked Pulse Carbines (18”, A2, AP(1));Fast, Strider, Tough(3), Vehicle;B, C, E ;105;131;24,76 %
+Heavy Stealth Suit;1;4;7;Heavy Suit Fists (A3, AP(2)),Linked Flamethrower (12”, A6),Ion Carbine (18”, A1, AP(3), Blast(3));Ambush, Flying, Tough(3), Stealth, Vehicle;F ;135;172;27,41 %
+Heavy Battle Suit;1;4;7;Suit Fists (A2, AP(1)),Linked Plasma Rifle (24”, A1, AP(3)),Linked Heavy Rail Rifle (48”, A1, AP(4), Deadly);Tough(3), Vehicle ;B, G ;175;146;-16,57 %
+Razor Fighter;1;4;6;Gatling Carbine (18”, A4, AP(1)),Ion Tailgun (30”, A1, AP(3), Blast(6));Flyer, Tough(3), Vehicle ;B, H ;165;141;-14,55 %
+Sun Bomber;1;4;6;Missile Pod (36”, A2, AP(3)),Pulse Bombs (6”, A1, AP(1), Blast(6)),2x Linked Ion Rifle (30”, A1, AP(3), Blast(3));Flyer, Tough(3), Vehicle ;B, I ;235;183;-22,13 %
+Tide Titan;1;4;9;Titan Stomp (A3, AP(2)),Linked Plasma Rifle (24”, A1, AP(3)),Heavy Gatling Carbine (36”, A8, AP(2));Titan, Tough(6), Vehicle ;J ;365;341;-6,58 %
+Surge Titan;1;4;8;Titan Stomp (A3, AP(2)),Linked Flamethrower (12”, A6),Cluster Rockets (48”, A14, AP(1)),Pulse Cannon (24”, A2, AP(6), Blast(3)),Linked Smart Missiles (30”, A4, AP(1), Indirect),4x Destroyer Missiles (48”, A1, AP(4), Deadly, Limited);Titan, Tough(9), Vehicle ;K ;795;670;-15,72 %

@@ -1,0 +1,32 @@
+
+\documentclass[]{article}
+
+%opening
+\title{Grimdark Future – TAO Coalition v1.5}
+\author{by Gaetano Ferrara (http://onepagerules.wordpress.com/) and modified by Jocelyn Falempe}
+\date{}
+
+\usepackage{comment}
+\usepackage[margin=1cm]{geometry}
+
+\usepackage{tabu}
+%\usepackage{tabulary}
+\usepackage{csvsimple}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\hyphenpenalty=100000
+\setlength\tabcolsep{3 pt}
+\rowcolors{1}{gray}{white}
+\small
+\begin{tabu} to \linewidth {lccX[2]>{\raggedright}X[1]cc}
+	Name [size]&Qua&Def&Equipment&Special Rules&Upgrades&Cost
+	\csvreader[/csv/separator=semicolon ]{Tao_spec.csv}{}
+	{\\\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii\space pts}
+\end{tabu}
+\end{center}
+\end{document}
