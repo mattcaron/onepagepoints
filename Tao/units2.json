@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Hover Transport",
+    "count": 1,
+    "quality": 4,
+    "defense": 7,
+    "equipment": [
+      "Gatling Carbine",
+      "Linked Pulse Carbines",
+      "Linked Pulse Carbines"
+    ],
+    "special": [
+      "fast",
+      "strider",
+      "tough(3)",
+      "transport(11)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  {
+    "name": "Hover Tank",
+    "count": 1,
+    "quality": 4,
+    "defense": 8,
+    "equipment": [
+      "Railgun",
+      "Linked Pulse Carbines",
+      "Linked Pulse Carbines"
+    ],
+    "special": [
+      "fast",
+      "strider",
+      "tough(6)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+  },
+  {
+    "name": "Hover Attack Bike",
+    "count": 1,
+    "quality": 4,
+    "defense": 6,
+    "equipment": [
+      "Gatling Carbine",
+      "Linked Pulse Carbines",
+      "Linked Pulse Carbines"
+    ],
+    "special": [
+      "fast",
+      "strider",
+      "tough(3)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "B",
+      "C",
+      "E"
+    ]
+  },
+  {
+    "name": "Heavy Stealth Suit",
+    "count": 1,
+    "quality": 4,
+    "defense": 7,
+    "equipment": [
+      "Heavy Suit Fists",
+      "Linked Flamethrower",
+      "Ion Carbine"
+    ],
+    "special": [
+      "ambush",
+      "flying",
+      "tough(3)",
+      "stealth",
+      "vehicle"
+    ],
+    "upgrades": [
+      "F"
+    ]
+  },
+  {
+    "name": "Heavy Battle Suit",
+    "count": 1,
+    "quality": 4,
+    "defense": 7,
+    "equipment": [
+      "Suit Fists",
+      "Linked Plasma Rifle",
+      "Linked Heavy Rail Rifle"
+    ],
+    "special": [
+      "tough(3)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "B",
+      "G"
+    ]
+  },
+  {
+    "name": "Razor Fighter",
+    "count": 1,
+    "quality": 4,
+    "defense": 6,
+    "equipment": [
+      "Gatling Carbine",
+      "Ion Tailgun"
+    ],
+    "special": [
+      "flyer",
+      "tough(3)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "B",
+      "H"
+    ]
+  },
+  {
+    "name": "Sun Bomber",
+    "count": 1,
+    "quality": 4,
+    "defense": 6,
+    "equipment": [
+      "Missile Pod",
+      "Pulse Bombs",
+      "Linked Ion Rifle",
+      "Linked Ion Rifle"
+    ],
+    "special": [
+      "flyer",
+      "tough(3)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "B",
+      "I"
+    ]
+  },
+  {
+    "name": "Tide Titan",
+    "count": 1,
+    "quality": 4,
+    "defense": 9,
+    "equipment": [
+      "Titan Stomp",
+      "Linked Plasma Rifle",
+      "Heavy Gatling Carbine"
+    ],
+    "special": [
+      "titan",
+      "tough(6)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "J"
+    ]
+  },
+  {
+    "name": "Surge Titan",
+    "count": 1,
+    "quality": 4,
+    "defense": 8,
+    "equipment": [
+      "Titan Stomp",
+      "Linked Flamethrower",
+      "Cluster Rockets",
+      "Pulse Cannon",
+      "Linked Smart Missiles",
+      "Destroyer Missiles",
+      "Destroyer Missiles",
+      "Destroyer Missiles",
+      "Destroyer Missiles"
+    ],
+    "special": [
+      "titan",
+      "tough(9)",
+      "vehicle"
+    ],
+    "upgrades": [
+      "K"
+    ]
+  }
+]
