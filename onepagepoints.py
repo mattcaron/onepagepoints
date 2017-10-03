@@ -80,11 +80,7 @@ class Weapon:
         self.cost = 0
 
     def __str__(self):
-        if self.cost:
-            s = str(self.cost) + " pts "
-        else:
-            s = ''
-        s += self.name + " ("
+        s = self.name + " ("
         if self.range > 0:
             s += '{0}", '.format(self.range)
         s += 'A{0}'.format(self.attacks)
@@ -93,6 +89,14 @@ class Weapon:
         if self.weaponRules:
             s += ', ' + ', '.join(self.weaponRules)
         s += ')'
+        return s
+
+    def Pretty(self):
+        if self.cost:
+            s = str(self.cost) + " pts "
+        else:
+            s = ''
+        s += self.__str__()
         return s
 
     def Cost(self, speed, quality):

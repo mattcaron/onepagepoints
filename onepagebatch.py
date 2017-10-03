@@ -36,6 +36,13 @@ def getEquipment(name):
     print('Error equipment {0} Not found !'.format(name))
     return None
 
+def getUnit(junit):
+    global equipments
+
+    unit_equipments = [getEquipment(equ) for equ in junit['equipment']]
+
+    return Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
+
 # Calculate the cost of an upgrade on a unit
 # If the upgrade is only for one model, set the unit count to 1
 # remove equipment, add new equipment and calculate the new cost.
@@ -71,11 +78,8 @@ def calculate_upgrade_group_cost(unit, upgrade_group):
 
 
 def calculate_unit_cost(junit, jupgrades):
-    global equipments
 
-    unit_equipments = [getEquipment(equ) for equ in junit['equipment']]
-
-    unit = Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
+    unit = getUnit(junit)
 
     up = junit['upgrades']
     for upgrade_group in junit['upgrades']:
@@ -84,6 +88,18 @@ def calculate_unit_cost(junit, jupgrades):
         else:
             print("Missing upgrade_group {0} in upgrades.json".format(upgrade_group))
 
+def write_unit_csv(junits, outfile):
+
+    units = [getUnit(junit) for junit in junits]
+
+    with open(outfile, 'w') as f:
+        for junit in junits:
+            unit = getUnit(junit)
+            equ = "\\newline ".join([str(equ) for equ in unit.equipments])
+            sp = ", ".join(unit.specialRules)
+            up = ", ".join(junit['upgrades'])
+            line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, unit.cost)
+            f.write(line)
 
 def main():
     global equipments
@@ -104,6 +120,8 @@ def main():
 
     for junit in junits:
         calculate_unit_cost(junit, jupgrades)
+
+    write_unit_csv(junits, 'units.csv')
 
     print(jupgrades)
 
