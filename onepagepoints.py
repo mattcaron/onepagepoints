@@ -25,24 +25,29 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 adjust_defense_cost = 0.8
 adjust_attack_cost = 0.8
 
+
 # Cost per defense point (2+ => 6, 6+ => 24, 10+ => 58)
 def defense_cost(d):
     return (d * d + d + 6.0) / 2.0
+
 
 # defense cost multiplier (higher quality units are tougher, due to moral test)
 # 1 for 2+ quality, 0.6 for 6+ quality
 def quality_defense_factor(q):
     return 1.0 - 0.1 * (q - 2.0)
 
+
 # Attack cost multiplier, probability to hit according to quality
 # 5/6 for 2+, 1/6 for 6+
 def quality_attack_factor(q):
     return (7.0 - q) / 6.0
 
+
 # AP cost multiplier.
 # 1 for no AP, * 1.2 for each AP point
 def ap_cost(ap):
     return (1.2 ** ap)
+
 
 # Range cost multiplier.
 # melee threaten range is charge distance (12" = speed)
@@ -51,7 +56,7 @@ def range_cost(wrange, speed):
     if wrange == 0:
         c = speed ** 0.75
     else:
-        c = (wrange + speed/2) ** 0.75
+        c = (wrange + speed / 2) ** 0.75
     return c
 
 
@@ -67,6 +72,7 @@ class WarGear:
     # cost is handled by the unit class, because it depends on too much things
     def Cost(self, speed, quality):
         return 0
+
 
 # Class for weapons
 class Weapon:
@@ -111,7 +117,7 @@ class Weapon:
                 quality -= 1
             elif s == 'rending':
                 # rending is 1/6 of having AP(8)
-                rending = (1/6) * (ap_cost(8) - ap_cost(self.armorPiercing))
+                rending = (1 / 6) * (ap_cost(8) - ap_cost(self.armorPiercing))
             elif s.startswith('blast'):
                 sfactor *= int(s[6:-1])
             elif s.startswith('impact'):
@@ -128,6 +134,7 @@ class Weapon:
         self.cost = int(round(self.cost * adjust_attack_cost))
 
         return self.cost
+
 
 class Unit:
     def __init__(self, name='Unknown unit', count=1, quality=4, defense=2, equipments=[], specialRules=[]):
@@ -215,20 +222,20 @@ class Unit:
         if 'vehicle' in specialRules or 'monster' in specialRules:
             smallStomp = Weapon('Monster Stomp', weaponRules=['impact(3)'])
             self.AddEquipment(smallStomp)
-            if not 'fear' in specialRules:
+            if 'fear' not in specialRules:
                 specialRules.append('fear')
 
         if 'titan' in specialRules:
             titanStomp = Weapon('Titan Stomp', 0, 6, 2, ['autohit'])
             self.AddEquipment(titanStomp)
-            if not 'fear' in specialRules:
+            if 'fear' not in specialRules:
                 specialRules.append('fear')
 
         if 'very fast' in specialRules:
             self.speed = 24
         if 'fast' in specialRules:
             self.speed = 18
-        if 'slow' in  specialRules:
+        if 'slow' in specialRules:
             self.speed = 8
         if 'stealth' in specialRules:
             # Stealth is like +0.5 def, because it works only against ranged attack
@@ -261,7 +268,8 @@ class Unit:
             if s.startswith('tough'):
                 self.tough = int(s[6:-1])
         if 'regeneration' in specialRules:
-            self.tough *= 4/3
+            self.tough *= 4 / 3
+
 
 def main():
 
@@ -281,7 +289,7 @@ def main():
     plasma.Cost(12, 4)
     print(plasma)
 
-    railgun = Weapon('railgun', 48, 1, 4, ['linked','deadly'])
+    railgun = Weapon('railgun', 48, 1, 4, ['linked', 'deadly'])
     railgun.Cost(12, 4)
     print(railgun)
 
@@ -298,6 +306,7 @@ def main():
     suitfist = Weapon('suitfist', 0, 4, 1)
     battlesuit_cpt = Unit('battlesuit Captain', 1, 3, 6, [suitfist], ['ambush', 'flying', 'hero', 'tough(3)'])
     print(battlesuit_cpt)
+
 
 if __name__ == "__main__":
     # execute only if run as a script
