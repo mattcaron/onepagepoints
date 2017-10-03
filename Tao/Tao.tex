@@ -1,0 +1,64 @@
+
+\documentclass[10pt]{article}
+
+%opening
+\title{Grimdark Future – TAO Coalition v1.5}
+\author{by Gaetano Ferrara (http://onepagerules.wordpress.com/) and modified by Jocelyn Falempe}
+\date{}
+
+\usepackage{comment}
+\usepackage[margin=1cm]{geometry}
+
+\usepackage{tabu}
+\usepackage{csvsimple}
+\usepackage[table]{xcolor}
+\usepackage{multicol}
+
+\definecolor{lgrey}{rgb}{0.85, 0.85, 0.85}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\hyphenpenalty=100000
+\setlength\tabcolsep{3 pt}
+\rowcolors{1}{white}{lgrey}
+\scriptsize
+\begin{tabu} to \linewidth {lccX[2]>{\raggedright}X[1]cc}
+	Name [size]&Qua&Def&Equipment&Special Rules&Upgrades&Cost
+	\csvreader[/csv/separator=semicolon ]{units1.csv}{}
+	{\\\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii\space pts}
+\end{tabu}
+\end{center}
+\hyphenpenalty=100000
+\setlength\tabcolsep{3 pt}
+\rowcolors{1}{white}{lgrey}
+\scriptsize
+
+\begin{multicols*}{3}[]
+\begin{center}
+\begin{tabu} to \linewidth {Xc}
+   	\csvreader[no head, /csv/separator=semicolon ]{upgradesA1.csv}{}
+   	{\csvcoli&\csvcolii\\}
+\end{tabu}
+
+\begin{tabu} to \linewidth {Xc}
+	\csvreader[no head, /csv/separator=semicolon ]{upgradesB1.csv}{}
+	{\csvcoli&\csvcolii\\}
+\end{tabu}
+
+\begin{tabu} to \linewidth {Xc}
+	\csvreader[no head, /csv/separator=semicolon ]{upgradesC1.csv}{}
+	{\csvcoli&\csvcolii\\}
+\end{tabu}
+
+\begin{tabu} to \linewidth {Xc}
+	\csvreader[no head, /csv/separator=semicolon ]{upgradesD1.csv}{}
+	{\csvcoli&\csvcolii\\}
+\end{tabu}
+\end{center}
+\end{multicols*}
+
+
+\end{document}
