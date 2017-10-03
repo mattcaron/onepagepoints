@@ -93,8 +93,6 @@ def calculate_unit_cost(junit, jupgrades):
 
 def write_unit_csv(junits, outfile):
 
-    units = [getUnit(junit) for junit in junits]
-
     with open(outfile, 'w') as f:
         for junit in junits:
             unit = getUnit(junit)
@@ -103,6 +101,31 @@ def write_unit_csv(junits, outfile):
             up = ", ".join(junit['upgrades'])
             line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, unit.cost)
             f.write(line)
+
+
+# an upgrade group cost is calculated for all units who have access to this
+# upgrade group, so calculate the mean
+# will transform [[11, 13], [7, 10]] in [9, 12]
+def calculate_mean_upgrade_cost(costs):
+    count = len(costs)
+    ret = [0] * len(costs[0])
+    for cu in costs:
+        for i, c in enumerate(cu):
+            ret[i] += c / count
+
+    ret = [int(round(c)) for c in ret]
+    return ret
+
+
+def write_upgrade_csv(jupgrades, faction, page):
+    for group, upgrades in jupgrades.items():
+        with open(os.path.join(faction, 'upgrades' + group + str(page) + '.csv'), 'w') as f:
+            f.write(group + ' | ')
+            for up in upgrades:
+                f.write(up['text'] + ';\n')
+                cost = calculate_mean_upgrade_cost(up['cost'])
+                for i, u in enumerate(up['add']):
+                    f.write('{0};{1} pts\n'.format('\\newline '.join(u), cost[i]))
 
 
 def main():
@@ -125,9 +148,8 @@ def main():
     for junit in junits:
         calculate_unit_cost(junit, jupgrades)
 
-    write_unit_csv(junits, 'units.csv')
-
-    print(jupgrades)
+    write_unit_csv(junits, os.path.join(faction, 'units1.csv'))
+    write_upgrade_csv(jupgrades, faction, 1)
 
 
 if __name__ == "__main__":
