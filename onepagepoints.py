@@ -54,14 +54,29 @@ def range_cost(wrange, speed):
         c = (wrange + speed/2) ** 0.75
     return c
 
+
+# Only for non-weapon equipment, like shield, ...
+class WarGear:
+    def __init__(self, name='Unknown gear', specialRules=[]):
+        self.name = name
+        self.specialRules = specialRules
+
+    def __str__(self):
+        return '{0} ({1})'.format(self.name, ', '.join(self.specialRules))
+
+    # cost is handled by the unit class, because it depends on too much things
+    def Cost(self, speed, quality):
+        return 0
+
 # Class for weapons
 class Weapon:
-    def __init__(self, name='Unknown weapon', range=0, attacks=0, armorPiercing=0, specialRules=[]):
+    def __init__(self, name='Unknown weapon', range=0, attacks=0, armorPiercing=0, weaponRules=[]):
         self.name = name
         self.range = range
         self.attacks = attacks
         self.armorPiercing = armorPiercing
-        self.specialRules = specialRules
+        self.weaponRules = weaponRules
+        self.specialRules = []
         self.cost = 0
 
     def __str__(self):
@@ -75,57 +90,55 @@ class Weapon:
         s += 'A{0}'.format(self.attacks)
         if self.armorPiercing:
             s += ', AP({0})'.format(self.armorPiercing)
-        if self.specialRules:
-            s += ', ' + ', '.join(self.specialRules)
+        if self.weaponRules:
+            s += ', ' + ', '.join(self.weaponRules)
         s += ')'
         return s
 
     def Cost(self, speed, quality):
-            sfactor = 1
-            simpact = 0
-            rending = 0
+        sfactor = 1
+        simpact = 0
+        rending = 0
 
-            for s in self.specialRules:
-                if s == 'deadly':
-                    sfactor *= 2.5
-                elif s == 'linked':
-                    quality -= 1
-                elif s == 'rending':
-                    # rending is 1/6 of having AP(8)
-                    rending = (1/6) * (ap_cost(8) - ap_cost(self.armorPiercing))
-                elif s.startswith('blast'):
-                    sfactor *= int(s[6:-1])
-                elif s.startswith('impact'):
-                    simpact = int(s[7:-1])
-                elif s == 'autohit':
-                    quality = 1
-                elif s == 'limited':
-                    sfactor /= 2
+        for s in self.weaponRules:
+            if s == 'deadly':
+                sfactor *= 2.5
+            elif s == 'linked':
+                quality -= 1
+            elif s == 'rending':
+                # rending is 1/6 of having AP(8)
+                rending = (1/6) * (ap_cost(8) - ap_cost(self.armorPiercing))
+            elif s.startswith('blast'):
+                sfactor *= int(s[6:-1])
+            elif s.startswith('impact'):
+                simpact = int(s[7:-1])
+            elif s == 'autohit':
+                quality = 1
+            elif s == 'limited':
+                sfactor /= 2
 
-            self.cost = sfactor * self.attacks * range_cost(self.range, speed) * (ap_cost(self.armorPiercing) * quality_attack_factor(quality) + rending)
-            # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
-            self.cost += 0.5 * simpact * sfactor * ap_cost(self.armorPiercing) * range_cost(self.range, speed)
+        self.cost = sfactor * self.attacks * range_cost(self.range, speed) * (ap_cost(self.armorPiercing) * quality_attack_factor(quality) + rending)
+        # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
+        self.cost += 0.5 * simpact * sfactor * ap_cost(self.armorPiercing) * range_cost(self.range, speed)
 
-            self.cost = int(round(self.cost * adjust_attack_cost))
+        self.cost = int(round(self.cost * adjust_attack_cost))
 
-            return self.cost
+        return self.cost
 
 class Unit:
-    def __init__(self, name='Unknown unit', count=1, quality=4, defense=2, weapons=[], specialRules=[]):
+    def __init__(self, name='Unknown unit', count=1, quality=4, defense=2, equipments=[], specialRules=[]):
         self.name = name
         self.specialRules = specialRules
-        self.weapons = weapons
+        self.equipments = equipments
         self.quality = quality
-        self.defense = defense
+        self.basedefense = defense
         self.count = count
 
-        self.parseSpecialRules()
-        self.Cost()
-
+        self.Update()
 
     def __str__(self):
         pretty = '{0} [{1}] {2} pts\n\t'.format(self.name, self.count, self.cost)
-        for w in self.weapons:
+        for w in self.equipments:
             pretty += str(w) + '\n\t'
 
         pretty += ', '.join(self.specialRules)
@@ -135,28 +148,21 @@ class Unit:
         return pretty
 
     def __copy__(self):
-        return Unit(self.name, self.count, self.quality, self.defense, self.weapons.copy(), self.specialRules.copy())
+        return Unit(self.name, self.count, self.quality, self.basedefense, self.equipments.copy(), self.specialRules.copy())
 
-    def AddWeapon(self, weapons):
-        print(weapons)
-        self.weapons += weapons
-        self.Cost()
-
-    def RemoveWeapon(self, weapons):
-        for w in weapons:
-            self.weapons.remove(w)
-        self.Cost()
-
-    def AddSpecial(self, special):
-        self.specialRules += special
+    def Update(self):
+        self.wargearSp = [sp for equ in self.equipments for sp in equ.specialRules]
         self.parseSpecialRules()
         self.Cost()
 
-    def RemoveSpecial(self, special):
-        for sp in special:
-            self.specialRules.remove(sp)
-        self.parseSpecialRules()
-        self.Cost()
+    def AddEquipment(self, equipments):
+        self.equipments += equipments
+        self.Update()
+
+    def RemoveEquipment(self, equipments):
+        for e in equipments:
+            self.equipments.remove(e)
+        self.Update()
 
     def SetCount(self, count):
         self.count = count
@@ -165,9 +171,9 @@ class Unit:
     def AttackCost(self):
         self.attackCost = 0
         quality = self.quality
-        if 'good shot' in self.specialRules:
+        if 'good shot' in self.specialRules + self.wargearSp:
             quality = 4
-        for w in self.weapons:
+        for w in self.equipments:
             self.attackCost += w.Cost(self.speed, quality) * self.count
 
         self.attackCost = int(round(self.attackCost))
@@ -193,62 +199,64 @@ class Unit:
         self.cost = self.defenseCost + self.attackCost + self.otherCost
         return self.cost
 
-
     def parseSpecialRules(self):
         self.speed = 12
         self.globalAdd = 0
         self.globalMultiplier = 0
         self.tough = 1
+        self.defense = self.basedefense
 
-        if 'vehicle' in self.specialRules or 'monster' in self.specialRules:
-            smallStomp = Weapon('Monster Stomp', specialRules=['impact(3)'])
-            self.AddWeapon(smallStomp)
-            if not 'fear' in self.specialRules:
-                self.specialRules.append('fear')
+        specialRules = self.specialRules + self.wargearSp
 
-        if 'titan' in self.specialRules:
+        if 'vehicle' in specialRules or 'monster' in specialRules:
+            smallStomp = Weapon('Monster Stomp', weaponRules=['impact(3)'])
+            self.AddEquipment(smallStomp)
+            if not 'fear' in specialRules:
+                specialRules.append('fear')
+
+        if 'titan' in specialRules:
             titanStomp = Weapon('Titan Stomp', 0, 6, 2, ['autohit'])
-            self.AddWeapon(titanStomp)
-            if not 'fear' in self.specialRules:
-                self.specialRules.append('fear')
+            self.AddEquipment(titanStomp)
+            if not 'fear' in specialRules:
+                specialRules.append('fear')
 
-        if 'very fast' in self.specialRules:
+        if 'very fast' in specialRules:
             self.speed = 24
-        if 'fast' in self.specialRules:
+        if 'fast' in specialRules:
             self.speed = 18
-        if 'slow' in  self.specialRules:
+        if 'slow' in  specialRules:
             self.speed = 8
-        if 'stealth' in self.specialRules:
+        if 'stealth' in specialRules:
             # Stealth is like +0.5 def, because it works only against ranged attack
             self.defense += 0.5
 
-        if 'ambush' in self.specialRules:
-            if 'scout' in self.specialRules:
+        if 'ambush' in specialRules:
+            if 'scout' in specialRules:
                 # Ambush and scout doesn't stack, since you can't use both
                 self.globalMultiplier += 0.2
             else:
                 self.globalMultiplier += 0.10
-        if 'scout' in self.specialRules:
+        if 'scout' in specialRules:
             self.globalMultiplier += 0.15
-        if 'inspiring' in self.specialRules:
+        if 'inspiring' in specialRules:
             self.globalAdd += 30
-        if 'volley fire' in self.specialRules:
+        if 'volley fire' in specialRules:
             self.globalAdd += 30
-        if 'Beacon' in self.specialRules:
+        if 'Beacon' in specialRules:
             self.globalAdd += 10
-        if 'Inhibitor' in self.specialRules:
+        if 'Inhibitor' in specialRules:
             self.globalAdd += 10
-        if 'fear' in self.specialRules:
+        if 'fear' in specialRules:
             self.globalAdd += 5
-        if 'strider' in self.specialRules:
+        if 'strider' in specialRules:
             self.speed *= 1.2
-        if 'flying' in self.specialRules:
+        if 'flying' in specialRules:
             self.speed *= 1.3
 
-        for s in self.specialRules:
+        for s in specialRules:
             if s.startswith('tough'):
                 self.tough = int(s[6:-1])
-        if 'regeneration' in self.specialRules:
+        if 'regeneration' in specialRules:
             self.tough *= 4/3
 
 def main():
@@ -273,7 +281,7 @@ def main():
     railgun.Cost(12, 4)
     print(railgun)
 
-    vehicle = Weapon('vehicle', specialRules=['impact(3)'])
+    vehicle = Weapon('vehicle', weaponRules=['impact(3)'])
     vehicle.Cost(12, 4)
     print(vehicle)
 

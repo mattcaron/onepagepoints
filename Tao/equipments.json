@@ -1,4 +1,4 @@
-{
+{ "weapons" : {
 "Ion Tailgun"                  : {"range": 30, "attacks": 1, "ap": 3, "special": ["blast(6)"]},
 "Pulse Carbines"               : {"range": 18, "attacks": 2, "ap": 1, "special": []},
 "Linked Heavy Rail Rifle"      : {"range": 48, "attacks": 1, "ap": 4, "special": ["deadly", "linked"]},
@@ -33,5 +33,11 @@
 "Pulse Bombs"                  : {"range": 6, "attacks": 1, "ap": 1, "special": ["blast(6)"]},
 "Sacred Spear"                 : {"range": 0,  "attacks": 3, "ap": 0, "special": []},
 "EMP Grenades"                 : {"range": 0, "attacks": 1, "ap": 0, "special": ["EMP"]},
-"Destroyer Missiles"           : {"range": 48, "attacks": 1, "ap": 4, "special": ["deadly", "limited"]}
-}
+"Destroyer Missiles"           : {"range": 48, "attacks": 1, "ap": 4, "special": ["deadly", "limited"]},
+"Spotting Lasers"              : {"range": 36, "attacks": 1, "ap": 0, "special": ["Spotting lasers"]}
+},
+"wargear" : {
+"Inhibitor Drone"              : ["inhibitor"],
+"Recon Drone"                  : ["beacon"],
+"Shield Drone"                 : ["shiled"]
+}}

@@ -27,27 +27,33 @@ import json
 import os
 import copy
 
+
+def getEquipment(name):
+    global equipments
+    for equ in equipments:
+        if equ.name == name:
+            return equ
+    print('Error equipment {0} Not found !'.format(name))
+    return None
+
 # Calculate the cost of an upgrade on a unit
 # If the upgrade is only for one model, set the unit count to 1
 # remove equipment, add new equipment and calculate the new cost.
 def calculate_upgrade_cost(unit, to_remove, to_add, all):
-    print('to_remove {0}'.format(to_remove))
-    print('to_add {0}'.format(to_add))
-
     new_unit = copy.copy(unit)
     if not all:
         new_unit.SetCount(1)
 
     prev_cost = new_unit.cost
 
-    new_unit.RemoveWeapon([getWeapon(w) for w in to_remove.get('weapons', [])])
-    new_unit.RemoveSpecial(to_remove.get('special', []))
+    new_unit.RemoveEquipment([getEquipment(w) for w in to_remove.get('equipments', [])])
 
     for upgrade in to_add:
         add_unit = copy.copy(new_unit)
-        add_unit.AddWeapon([getWeapon(w) for w in upgrade.get('weapons', [])])
-        add_unit.AddSpecial(upgrade.get('special', []))
+        add_unit.AddEquipment([getEquipment(w) for w in upgrade.get('equipments', [])])
+
         up_cost = add_unit.cost - prev_cost
+
         if 'cost' in upgrade:
             upgrade['cost'].append(up_cost)
         else:
@@ -60,20 +66,13 @@ def calculate_upgrade_group_cost(unit, upgrade_group):
         to_add = upgrade_batch['add']
         calculate_upgrade_cost(unit, to_remove, to_add, all)
 
-def getWeapon(name):
-    global weapons
-    for w in weapons:
-        if w.name == name:
-            return w
-    print('Error weapon {0} Not found !'.format(name))
-    return None
 
 def calculate_unit_cost(junit, jupgrades):
-    global weapons
+    global equipments
 
-    unit_weapon = [getWeapon(w) for w in junit['equipment']]
+    unit_equipments = [getEquipment(equ) for equ in junit['equipment']]
 
-    unit = Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_weapon, junit['special'])
+    unit = Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
 
     up = junit['upgrades']
     for upgrade_group in junit['upgrades']:
@@ -84,14 +83,15 @@ def calculate_unit_cost(junit, jupgrades):
 
 
 def main():
-    global weapons
+    global equipments
 
     faction = "Tao"
 
-    with open(os.path.join(faction, "weapons.json"), "r") as f:
-        jweapons = json.loads(f.read())
+    with open(os.path.join(faction, "equipments.json"), "r") as f:
+        jequipments = json.loads(f.read())
 
-    weapons = [Weapon(w, jweapons[w]['range'], jweapons[w]['attacks'], jweapons[w]['ap'], jweapons[w]['special']) for w in jweapons]
+    equipments = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
+    equipments += [WarGear(name, rules) for name, rules in jequipments['wargear'].items()]
 
     with open(os.path.join(faction, "units1.json"), "r") as f:
         junits = json.loads(f.read())

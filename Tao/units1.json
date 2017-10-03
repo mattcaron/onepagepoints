@@ -76,7 +76,8 @@
     "quality": 5,
     "defense": 3,
     "equipment": [
-      "Pulse Carbines"
+      "Pulse Carbines",
+      "Spotting Lasers"
     ],
     "special": [
       "good shot",

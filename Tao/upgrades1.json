@@ -1,24 +1,24 @@
 { "A" : [{ "text" : "Upgrade any model with up to three",
-           "add" : [{"weapons" : ["Pulse Rifle"]}, {"weapons" : ["Plasma Rifle"]}]
+           "add" : [{"equipments" : ["Pulse Rifle"]}, {"equipments" : ["Plasma Rifle"]}]
            }],
   "B" : [{ "text" : "Upgrade any model with one",
-           "add" : [{"name" : "Recon Drone", "special" : ["Beacon"]},
-                     {"name" : "Inhibitor Drone", "special" : ["Inhibitor"]}]
+           "add" : [{"equipments" : ["Recon Drone"]},
+                     {"equipments" : ["Inhibitor Drone"]}]
           }],
   "C" : [{ "text" : "Replace Sacred Spear",
-           "remove" : {"weapons" : ["Sacred Spear"]},
-           "add" : [{"weapons" : ["Dual-Spear"]}]
+           "remove" : {"equipments" : ["Sacred Spear"]},
+           "add" : [{"equipments" : ["Dual-Spear"]}]
           }],
   "D" : [{ "text" : "Replace all Pulse Shotguns",
            "all" : true,
-           "remove" : {"weapons" : ["Pulse Shotguns"]},
-           "add" : [{"weapons" : ["Pulse Rifle"]}, {"weapons" : ["Pulse Carbines"]}]
+           "remove" : {"equipments" : ["Pulse Shotguns"]},
+           "add" : [{"equipments" : ["Pulse Rifle"]}, {"equipments" : ["Pulse Carbines"]}]
          },
          { "text" : "Upgrade all models with",
            "all" : true,
-           "add" : [{"weapons" : ["EMP Grenades"]}]
+           "add" : [{"equipments" : ["EMP Grenades"]}]
          },
          { "text" : "Add one support turret with",
-           "add" : [{"weapons" : ["Missile Pod"]}, {"weapons" : ["Smart Missiles"]}]
+           "add" : [{"equipments" : ["Missile Pod"]}, {"equipments" : ["Smart Missiles"]}]
          }]
 }
