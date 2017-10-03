@@ -46,25 +46,28 @@ def calculate_upgrade_cost(unit, to_remove, to_add, all):
 
     prev_cost = new_unit.cost
 
-    new_unit.RemoveEquipment([getEquipment(w) for w in to_remove.get('equipments', [])])
+    new_unit.RemoveEquipment([getEquipment(w) for w in to_remove])
 
+    costs = []
     for upgrade in to_add:
         add_unit = copy.copy(new_unit)
-        add_unit.AddEquipment([getEquipment(w) for w in upgrade.get('equipments', [])])
+        add_unit.AddEquipment([getEquipment(w) for w in upgrade])
 
         up_cost = add_unit.cost - prev_cost
+        costs.append(up_cost)
+    return costs
 
-        if 'cost' in upgrade:
-            upgrade['cost'].append(up_cost)
-        else:
-            upgrade['cost'] = [up_cost]
 
 def calculate_upgrade_group_cost(unit, upgrade_group):
     for upgrade_batch in upgrade_group:
         all = upgrade_batch.get('all', False)
         to_remove = upgrade_batch.get('remove', {})
         to_add = upgrade_batch['add']
-        calculate_upgrade_cost(unit, to_remove, to_add, all)
+        costs = calculate_upgrade_cost(unit, to_remove, to_add, all)
+        if 'cost' in upgrade_batch:
+            upgrade_batch['cost'].append(costs)
+        else:
+            upgrade_batch['cost'] = [costs]
 
 
 def calculate_unit_cost(junit, jupgrades):
