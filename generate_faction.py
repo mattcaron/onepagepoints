@@ -111,10 +111,7 @@ def main():
                 continue
 
             for i, col in enumerate(column_order):
-                if col in ['name', 'equipment', 'special']:
-                    dunit[col] = row[i]
-                else:
-                    dunit[col] = row[i]
+                dunit[col] = row[i]
 
             equipment = parse_equipment(dunit['equipment'])
 

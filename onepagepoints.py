@@ -138,11 +138,23 @@ class Unit:
         return Unit(self.name, self.count, self.quality, self.defense, self.weapons.copy(), self.specialRules.copy())
 
     def AddWeapon(self, weapons):
+        print(weapons)
         self.weapons += weapons
+        self.Cost()
+
+    def RemoveWeapon(self, weapons):
+        for w in weapons:
+            self.weapons.remove(w)
         self.Cost()
 
     def AddSpecial(self, special):
         self.specialRules += special
+        self.parseSpecialRules()
+        self.Cost()
+
+    def RemoveSpecial(self, special):
+        for sp in special:
+            self.specialRules.remove(sp)
         self.parseSpecialRules()
         self.Cost()
 

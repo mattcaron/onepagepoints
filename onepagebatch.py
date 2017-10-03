@@ -28,27 +28,37 @@ import os
 import copy
 
 # Calculate the cost of an upgrade on a unit
-# Set unit count to 1, to add only one weapon to the squad
-def calculate_add_cost(unit, upgrade):
-    for up in upgrade:
-        new_unit = copy.copy(unit)
+# If the upgrade is only for one model, set the unit count to 1
+# remove equipment, add new equipment and calculate the new cost.
+def calculate_upgrade_cost(unit, to_remove, to_add, all):
+    print('to_remove {0}'.format(to_remove))
+    print('to_add {0}'.format(to_add))
+
+    new_unit = copy.copy(unit)
+    if not all:
         new_unit.SetCount(1)
-        prev_cost = new_unit.cost
-        if 'weapons' in up:
-            new_weapons = [getWeapon(w) for w in up['weapons']]
-            new_unit.AddWeapon(new_weapons)
-        if 'special' in up:
-            new_unit.AddSpecial(up['special'])
-        up_cost = new_unit.cost - prev_cost
-        if 'cost' in up:
-            up['cost'].append(up_cost)
+
+    prev_cost = new_unit.cost
+
+    new_unit.RemoveWeapon([getWeapon(w) for w in to_remove.get('weapons', [])])
+    new_unit.RemoveSpecial(to_remove.get('special', []))
+
+    for upgrade in to_add:
+        add_unit = copy.copy(new_unit)
+        add_unit.AddWeapon([getWeapon(w) for w in upgrade.get('weapons', [])])
+        add_unit.AddSpecial(upgrade.get('special', []))
+        up_cost = add_unit.cost - prev_cost
+        if 'cost' in upgrade:
+            upgrade['cost'].append(up_cost)
         else:
-            up['cost'] = [up_cost]
+            upgrade['cost'] = [up_cost]
 
 def calculate_upgrade_group_cost(unit, upgrade_group):
-    for up in upgrade_group:
-        if up['cmd'] == 'add':
-            calculate_add_cost(unit, up['list'])
+    for upgrade_batch in upgrade_group:
+        all = upgrade_batch.get('all', False)
+        to_remove = upgrade_batch.get('remove', {})
+        to_add = upgrade_batch['add']
+        calculate_upgrade_cost(unit, to_remove, to_add, all)
 
 def getWeapon(name):
     global weapons
