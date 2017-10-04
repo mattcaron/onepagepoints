@@ -34,10 +34,24 @@
 "Sacred Spear"                 : {"range": 0,  "attacks": 3, "ap": 0, "special": []},
 "EMP Grenades"                 : {"range": 0, "attacks": 1, "ap": 0, "special": ["EMP"]},
 "Destroyer Missiles"           : {"range": 48, "attacks": 1, "ap": 4, "special": ["deadly", "limited"]},
-"Spotting Lasers"              : {"range": 36, "attacks": 1, "ap": 0, "special": ["Spotting lasers"]}
+"Spotting Lasers"              : {"range": 36, "attacks": 1, "ap": 0, "special": ["Spotting lasers"]},
+"Spotter Drone"                : {"range": 36, "attacks": 1, "ap": 0, "special": ["Spotting lasers"]},
+"Flamethrower"                 : {"range": 12, "attacks": 6, "ap": 0, "special": []},
+"Frag Pod"                     : {"range": 18, "attacks": 1, "ap": 1, "special": ["blast(6)", "indirect"]},
+"Ion Carbine"                  : {"range": 18, "attacks": 1, "ap": 3, "special": ["blast(3)"]},
+"Fusion Carbine"               : {"range": 18, "attacks": 1, "ap": 7, "special": ["deadly"]},
+"Missile Pod"                  : {"range": 36, "attacks": 2, "ap": 3, "special": []},
+"High Output Gatling Carbine"  : {"range": 18, "attacks": 6, "ap": 1, "special": ["linked"]},
+"Missile Drone"                : {"range": 36, "attacks": 2, "ap": 3, "special": []},
+"Gun Drone"                    : {"range": 18, "attacks": 2, "ap": 1, "special": ["linked"]}
+
+
+
 },
 "wargear" : {
 "Inhibitor Drone"              : ["inhibitor"],
 "Recon Drone"                  : ["beacon"],
-"Shield Drone"                 : ["shiled"]
+"Accelerator Drone"            : ["accelerator"],
+"Shield Drone"                 : ["regeneration"]
+
 }}
