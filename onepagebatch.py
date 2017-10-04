@@ -118,14 +118,14 @@ def calculate_mean_upgrade_cost(costs):
 
 
 def write_upgrade_csv(jupgrades, faction, page):
-    for group, upgrades in jupgrades.items():
-        with open(os.path.join(faction, 'upgrades' + group + str(page) + '.csv'), 'w') as f:
+    with open(os.path.join(faction, 'upgrades' + str(page) + '.csv'), 'w') as f:
+        for group, upgrades in jupgrades.items():
             f.write(group + ' | ')
             for up in upgrades:
-                f.write(up['text'] + ';\n')
+                f.write(up['text'] + ';;' + group + '\n')
                 cost = calculate_mean_upgrade_cost(up['cost'])
                 for i, u in enumerate(up['add']):
-                    f.write('{0};{1} pts\n'.format('\\newline '.join(u), cost[i]))
+                    f.write('{0};{1} pts;{2}\n'.format('\\newline '.join(u), cost[i], group))
 
 
 def main():
