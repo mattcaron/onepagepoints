@@ -38,34 +38,33 @@
 \begin{multicols*}{3}[]
 \begin{center}
 
-\vspace{3pt}	
+\vspace{6pt}
 \rowcolors{1}{white}{lgrey}	
 \begin{tabu} to \linewidth {Xc}
    	\csvreader[no head, late after line = \\,filter strcmp={A}{\csvcoliii}, /csv/separator=semicolon ]{upgrades1.csv}{}
    	{\csvcoli&\csvcolii}
 \end{tabu}
 
-\vspace{3pt}
+\vspace{6pt}
 \rowcolors{1}{white}{lgrey}
 \begin{tabu} to \linewidth {Xc}
 	\csvreader[no head, late after line = \\,filter strcmp={B}{\csvcoliii}, /csv/separator=semicolon ]{upgrades1.csv}{}
 	{\csvcoli&\csvcolii}
 \end{tabu}
 
-\vspace{3pt}
+\vspace{6pt}
 \rowcolors{1}{white}{lgrey}
 \begin{tabu} to \linewidth {Xc}
 	\csvreader[no head, late after line = \\,filter strcmp={C}{\csvcoliii}, /csv/separator=semicolon ]{upgrades1.csv}{}
 	{\csvcoli&\csvcolii}
 \end{tabu}
 
-\vspace{3pt}
+\vspace{6pt}
 \rowcolors{1}{white}{lgrey}
 \begin{tabu} to \linewidth {Xc}
 	\csvreader[no head, late after line = \\,filter strcmp={D}{\csvcoliii}, /csv/separator=semicolon ]{upgrades1.csv}{}
 	{\csvcoli&\csvcolii}
 \end{tabu}
-
 
 \end{center}
 \end{multicols*}
