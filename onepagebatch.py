@@ -124,8 +124,9 @@ def write_upgrade_csv(jupgrades, faction, page):
             for up in upgrades:
                 f.write(up['text'] + ';;' + group + '\n')
                 cost = calculate_mean_upgrade_cost(up['cost'])
-                for i, u in enumerate(up['add']):
-                    f.write('{0};{1} pts;{2}\n'.format('\\newline '.join(u), cost[i], group))
+                for i, addEqu in enumerate(up['add']):
+                    prettyEqu = [str(getEquipment(equ)) for equ in addEqu]
+                    f.write('{0};{1} pts;{2}\n'.format('\\newline '.join(prettyEqu), cost[i], group))
 
 
 def main():
