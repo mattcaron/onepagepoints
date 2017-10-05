@@ -5,7 +5,7 @@
     "quality": 3,
     "defense": 6,
     "equipment": [
-      "Suit Fists"
+      "Captain Suit Fists"
     ],
     "special": [
       "ambush",
@@ -156,9 +156,7 @@
       "flying",
       "good shot"
     ],
-    "upgrades": [
-      "-"
-    ]
+    "upgrades": []
   },
   {
     "name": "Jackals",
@@ -189,9 +187,7 @@
       "scout",
       "strider"
     ],
-    "upgrades": [
-      "-"
-    ]
+    "upgrades": []
   },
   {
     "name": "Jackal Beast Riders",
@@ -206,9 +202,7 @@
       "strider",
       "tough(3)"
     ],
-    "upgrades": [
-      "-"
-    ]
+    "upgrades": []
   },
   {
     "name": "Locusts",
@@ -222,8 +216,6 @@
       "ambush",
       "flying"
     ],
-    "upgrades": [
-      "-"
-    ]
+    "upgrades": []
   }
 ]

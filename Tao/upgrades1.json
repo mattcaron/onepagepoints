@@ -19,5 +19,43 @@
          },
          { "text" : "Add one support turret with",
            "add" : [["Missile Pod"],["Smart Missiles"]]
-         }]
+         }],
+"E" : [{ "text" : "Replace up to three Pulse Carbines",
+         "remove" : ["Pulse Carbines"],
+         "add" : [["Rail Rifle"],["Ion Rifle"]]
+       }],
+"F" : [{ "text" : "Replace all Pulse Rifles",
+         "all" : true,
+         "remove" : ["Pulse Rifles"],
+         "add" : [["Sniper Pulse Rifles"]]
+       }],
+"G" : [{ "text" : "Replace one Gatling Carbine",
+         "remove" : ["Gatling Carbines"],
+         "add" : [["Fusion Carbine"]]
+       }],
+"H" : [{ "text" : "Replace all Assault Rifles",
+         "all" : true,
+         "remove" : ["Assault Rifles"],
+         "add" : [["Marksman Rifles"]]
+       },
+       { "text" : "Replace one Assault Rifle",
+         "remove" : ["Assault Rifles"],
+         "add" : [["Pulse Rifle"],["Pulse Carbines"]]
+       },
+       { "text" : "Upgrade all models with",
+         "all" : true,
+         "add" : [["Jackal's Bayonets"]]
+       },
+       { "text" : "Upgrade one model with",
+         "add" : [["Ritual Dagger"]]
+       }],
+"I" : [{ "text" : "Replace Captain Suit Fists",
+         "remove" : ["Captain Suit Fists"],
+         "add" : [["Captain Energy Sword"]]
+       }],
+"J" : [{ "text" : "Replace all Suit Fists",
+         "all" : true,
+         "remove" : ["Suit Fists"],
+         "add" : [["Energy Swords"]]
+       }]
 }
