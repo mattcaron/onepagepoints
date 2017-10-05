@@ -109,6 +109,8 @@ class Weapon:
         sfactor = 1
         simpact = 0
         rending = 0
+        wrange = self.range
+        ap = self.armorPiercing
 
         for s in self.weaponRules:
             if s == 'deadly':
@@ -126,10 +128,17 @@ class Weapon:
                 quality = 1
             elif s == 'limited':
                 sfactor /= 2
+            elif s == 'sniper':
+                # Sniper is 2+ hit and ignore cover (so statistically half an ap)
+                quality = 2
+                ap += 0.5
+            elif s == 'indirect':
+                wrange *= 1.4
 
-        self.cost = sfactor * self.attacks * range_cost(self.range, speed) * (ap_cost(self.armorPiercing) * quality_attack_factor(quality) + rending)
+        self.cost = sfactor * self.attacks * range_cost(wrange, speed) * (ap_cost(ap) * quality_attack_factor(quality) + rending)
         # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
-        self.cost += 0.5 * simpact * sfactor * ap_cost(self.armorPiercing) * range_cost(self.range, speed)
+        if simpact:
+            self.cost += 0.5 * simpact * sfactor * ap_cost(ap) * range_cost(wrange, speed)
 
         self.cost = int(round(self.cost * adjust_attack_cost))
 
@@ -199,7 +208,7 @@ class Unit:
     # attack and defense cost should already be computed
     def OtherCost(self):
         self.otherCost = self.globalAdd
-        self.otherCost += (self.otherCost + self.attackCost + self.defenseCost) * self.globalMultiplier
+        self.otherCost += (self.attackCost + self.defenseCost) * self.globalMultiplier
         self.otherCost = int(round(self.otherCost))
 
     def Cost(self):
@@ -253,10 +262,12 @@ class Unit:
             self.globalAdd += 30
         if 'volley fire' in specialRules:
             self.globalAdd += 30
-        if 'Beacon' in specialRules:
+        if 'beacon' in specialRules:
             self.globalAdd += 10
-        if 'Inhibitor' in specialRules:
+        if 'inhibitor' in specialRules:
             self.globalAdd += 10
+        if 'accelerator' in specialRules:
+            self.globalAdd += 15
         if 'fear' in specialRules:
             self.globalAdd += 5
         if 'strider' in specialRules:
