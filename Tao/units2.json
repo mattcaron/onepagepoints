@@ -4,7 +4,7 @@
   "quality" : 4,
   "defense" : 7,
   "equipment" : ["Gatling Carbine", "Linked Pulse Carbines", "Linked Pulse Carbines"],
-  "special" : ["fast", "strider", "tough(3)", "transport(11)", "vehicle"],
+  "special" : ["Fast", "Strider", "Tough(3)", "Transport(11)", "Vehicle"],
   "upgrades" : ["A", "B", "C"]
 },{
   "name" : "Hover Tank",
@@ -12,7 +12,7 @@
   "quality" : 4,
   "defense" : 8,
   "equipment" : ["Railgun", "Linked Pulse Carbines", "Linked Pulse Carbines"],
-  "special" : ["fast", "strider", "tough(6)", "vehicle"],
+  "special" : ["Fast", "Strider", "Tough(6)", "Vehicle"],
   "upgrades" : ["A", "B", "C", "D"]
 },{
   "name" : "Hover Attack Bike",
@@ -20,7 +20,7 @@
   "quality" : 4,
   "defense" : 6,
   "equipment" : ["Gatling Carbine", "Linked Pulse Carbines", "Linked Pulse Carbines"],
-  "special" : ["fast", "strider", "tough(3)", "vehicle"],
+  "special" : ["Fast", "Strider", "Tough(3)", "Vehicle"],
   "upgrades" : ["B", "C", "E"]
 },{
   "name" : "Heavy Stealth Suit",
@@ -28,7 +28,7 @@
   "quality" : 4,
   "defense" : 7,
   "equipment" : ["Heavy Suit Fists", "Linked Flamethrower", "Ion Carbine"],
-  "special" : ["ambush", "flying", "tough(3)", "stealth", "vehicle"],
+  "special" : ["Ambush", "Flying", "Tough(3)", "Stealth", "Vehicle"],
   "upgrades" : ["F"]
 },{
   "name" : "Heavy Battle Suit",
@@ -36,7 +36,7 @@
   "quality" : 4,
   "defense" : 7,
   "equipment" : ["Suit Fists", "Linked Plasma Rifle", "Linked Heavy Rail Rifle"],
-  "special" : ["tough(3)", "vehicle"],
+  "special" : ["Tough(3)", "Vehicle"],
   "upgrades" : ["B", "G"]
 },{
   "name" : "Razor Fighter",
@@ -44,7 +44,7 @@
   "quality" : 4,
   "defense" : 6,
   "equipment" : ["Gatling Carbine", "Ion Tailgun"],
-  "special" : ["flyer", "tough(3)", "vehicle"],
+  "special" : ["Flyer", "Tough(3)", "Vehicle"],
   "upgrades" : ["B", "H"]
 },{
   "name" : "Sun Bomber",
@@ -52,7 +52,7 @@
   "quality" : 4,
   "defense" : 6,
   "equipment" : ["Missile Pod", "Pulse Bombs", "Linked Ion Rifle", "Linked Ion Rifle"],
-  "special" : ["flyer", "tough(3)", "vehicle"],
+  "special" : ["Flyer", "Tough(3)", "Vehicle"],
   "upgrades" : ["B", "I"]
 },{
   "name" : "Tide Titan",
@@ -60,7 +60,7 @@
   "quality" : 4,
   "defense" : 9,
   "equipment" : ["Titan Stomp", "Linked Plasma Rifle", "Heavy Gatling Carbine"],
-  "special" : ["titan", "tough(6)", "vehicle"],
+  "special" : ["Titan", "Tough(6)", "Vehicle"],
   "upgrades" : ["J"]
 },{
   "name" : "Surge Titan",
@@ -68,6 +68,6 @@
   "quality" : 4,
   "defense" : 8,
   "equipment" : ["Titan Stomp", "Linked Flamethrower", "Cluster Rockets", "Pulse Cannon", "Linked Smart Missiles", "Destroyer Missiles", "Destroyer Missiles", "Destroyer Missiles", "Destroyer Missiles"],
-  "special" : ["titan", "tough(9)", "vehicle"],
+  "special" : ["Titan", "Tough(9)", "Vehicle"],
   "upgrades" : ["K"]
 }]

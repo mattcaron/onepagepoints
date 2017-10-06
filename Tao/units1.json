@@ -4,7 +4,7 @@
   "quality" : 3,
   "defense" : 6,
   "equipment" : ["Captain Suit Fists"],
-  "special" : ["ambush", "flying", "hero", "tough(3)"],
+  "special" : ["Ambush", "Flying", "Hero", "Tough(3)"],
   "upgrades" : ["A", "B", "I"]
 },{
   "name" : "Grunt Captain",
@@ -12,7 +12,7 @@
   "quality" : 4,
   "defense" : 4,
   "equipment" : ["Pulse Rifle", "Ritual Dagger"],
-  "special" : ["hero", "tough(3)", "volley fire"],
+  "special" : ["Hero", "Tough(3)", "Volley fire"],
   "upgrades" : ["B"]
 },{
   "name" : "Sage",
@@ -20,7 +20,7 @@
   "quality" : 4,
   "defense" : 2,
   "equipment" : ["Sacred Spear"],
-  "special" : ["hero", "inspiring", "tough(3)"],
+  "special" : ["Hero", "Inspiring", "Tough(3)"],
   "upgrades" : ["C"]
 },{
   "name" : "Grunt Squad",
@@ -28,7 +28,7 @@
   "quality" : 5,
   "defense" : 4,
   "equipment" : ["Pulse Shotguns"],
-  "special" : ["good shot"],
+  "special" : ["Good shot"],
   "upgrades" : ["B", "D"]
 },{
   "name" : "Spotter Squad",
@@ -36,7 +36,7 @@
   "quality" : 5,
   "defense" : 3,
   "equipment" : ["Pulse Carbines", "Spotting Lasers"],
-  "special" : ["good shot", "scout"],
+  "special" : ["Good shot", "Scout"],
   "upgrades" : ["B", "E"]
 },{
   "name" : "Stealth Suits",
@@ -44,7 +44,7 @@
   "quality" : 5,
   "defense" : 5,
   "equipment" : ["Gatling Carbines"],
-  "special" : ["ambush", "good shot", "scout", "stealth"],
+  "special" : ["Ambush", "Good shot", "Scout", "Stealth"],
   "upgrades" : ["B", "G"]
 },{
   "name" : "Battle Suits",
@@ -52,7 +52,7 @@
   "quality" : 4,
   "defense" : 6,
   "equipment" : ["Suit Fists"],
-  "special" : ["ambush", "flying", "tough(3)"],
+  "special" : ["Ambush", "Flying", "Tough(3)"],
   "upgrades" : ["A", "B", "J"]
 },{
   "name" : "Sniper Drones",
@@ -60,7 +60,7 @@
   "quality" : 5,
   "defense" : 3,
   "equipment" : ["Pulse Rifles"],
-  "special" : ["ambush", "flying", "good shot"],
+  "special" : ["Ambush", "Flying", "Good shot"],
   "upgrades" : ["F"]
 },{
   "name" : "Gun Drones",
@@ -68,7 +68,7 @@
   "quality" : 5,
   "defense" : 3,
   "equipment" : ["Linked Pulse Carbines"],
-  "special" : ["ambush", "flying", "good shot"],
+  "special" : ["Ambush", "Flying", "Good shot"],
   "upgrades" : []
 },{
   "name" : "Jackals",
@@ -76,7 +76,7 @@
   "quality" : 5,
   "defense" : 2,
   "equipment" : ["Assault Rifles"],
-  "special" : ["scout", "strider"],
+  "special" : ["Scout", "Strider"],
   "upgrades" : ["H"]
 },{
   "name" : "Jackal Hounds",
@@ -84,7 +84,7 @@
   "quality" : 5,
   "defense" : 2,
   "equipment" : ["Claws"],
-  "special" : ["fast", "scout", "strider"],
+  "special" : ["Fast", "Scout", "Strider"],
   "upgrades" : []
 },{
   "name" : "Jackal Beast Riders",
@@ -92,7 +92,7 @@
   "quality" : 5,
   "defense" : 4,
   "equipment" : ["Autocannons"],
-  "special" : ["scout", "strider", "tough(3)"],
+  "special" : ["Scout", "Strider", "Tough(3)"],
   "upgrades" : []
 },{
   "name" : "Locusts",
@@ -100,6 +100,6 @@
   "quality" : 4,
   "defense" : 3,
   "equipment" : ["Neutron Carbines"],
-  "special" : ["ambush", "flying"],
+  "special" : ["Ambush", "Flying"],
   "upgrades" : []
 }]
