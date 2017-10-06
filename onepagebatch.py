@@ -31,26 +31,36 @@ import copy
 def getEquipment(name):
     global equipments
 
-    for equ in equipments:
-        if equ.name == name:
-            return equ
+    if name in equipments:
+        return equipments[name]
 
     if name.endswith('s'):
         singular = name[:-1]
-        for equ in equipments:
-            if equ.name == singular:
-                return equ
+        if singular in equipments:
+            return equipments[singular]
 
     print('Error equipment {0} Not found !'.format(name))
     return None
 
 
+def getEquipments(names):
+    return [getEquipment(name) for name in names]
+
+
 def getUnit(junit):
     global equipments
 
-    unit_equipments = [getEquipment(equ) for equ in junit['equipment']]
+    unit_equipments = getEquipments(junit['equipment'])
 
     return Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
+
+
+def points(n):
+    if n == 0:
+        return "Free"
+    if n == 1:
+        return "1 pt"
+    return '{} pts'.format(n)
 
 
 # Calculate the cost of an upgrade on a unit
@@ -63,12 +73,12 @@ def calculate_upgrade_cost(unit, to_remove, to_add, all):
 
     prev_cost = new_unit.cost
 
-    new_unit.RemoveEquipment([getEquipment(w) for w in to_remove])
+    new_unit.RemoveEquipment(getEquipments(to_remove))
 
     costs = []
     for upgrade in to_add:
         add_unit = copy.copy(new_unit)
-        add_unit.AddEquipment([getEquipment(w) for w in upgrade])
+        add_unit.AddEquipment(getEquipments(upgrade))
 
         up_cost = add_unit.cost - prev_cost
         costs.append(up_cost)
@@ -100,14 +110,13 @@ def calculate_unit_cost(junit, jupgrades):
 
 
 def write_unit_csv(junits, outfile):
-
     with open(outfile, 'w') as f:
         for junit in junits:
             unit = getUnit(junit)
             equ = "\\newline ".join([str(equ) for equ in unit.equipments])
             sp = ", ".join(unit.specialRules)
             up = ", ".join(junit['upgrades'])
-            line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, unit.cost)
+            line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, points(unit.cost))
             f.write(line)
 
 
@@ -134,7 +143,7 @@ def write_upgrade_csv(jupgrades, faction, page):
                 cost = calculate_mean_upgrade_cost(up['cost'])
                 for i, addEqu in enumerate(up['add']):
                     prettyEqu = [str(getEquipment(equ)) for equ in addEqu]
-                    f.write('{0};{1} pts;{2}\n'.format('\\newline '.join(prettyEqu), cost[i], group))
+                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEqu), points(cost[i]), group))
 
 
 def main():
@@ -145,9 +154,12 @@ def main():
     with open(os.path.join(faction, "equipments.json"), "r") as f:
         jequipments = json.loads(f.read())
 
-    equipments = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
-    equipments += [Weapon('Linked ' + name, w['range'], w['attacks'], w['ap'], ['Linked'] + w['special']) for name, w in jequipments['weapons'].items() if not 'Linked' in w['special'] and w['range'] > 0]
-    equipments += [WarGear(name, rules) for name, rules in jequipments['wargear'].items()]
+    weaponList = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
+    weaponList += [Weapon('Linked ' + name, w['range'], w['attacks'], w['ap'], ['Linked'] + w['special']) for name, w in jequipments['weapons'].items() if 'Linked' not in w['special'] and w['range'] > 0]
+    equipments = {equ.name: equ for equ in weaponList}
+
+    warGearList = [WarGear(name, wargear['special'], getEquipments(wargear['weapons'])) for name, wargear in jequipments['wargear'].items()]
+    equipments = {equ.name: equ for equ in warGearList + weaponList}
 
     with open(os.path.join(faction, "units1.json"), "r") as f:
         junits = json.loads(f.read())

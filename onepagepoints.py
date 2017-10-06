@@ -60,18 +60,24 @@ def range_cost(wrange, speed):
     return c
 
 
-# Only for non-weapon equipment, like shield, ...
+# WargGear can include special rules for model, and weapons
+# Like a jetbike gives "fast" rules and a Linked ShardGun
 class WarGear:
-    def __init__(self, name='Unknown Gear', specialRules=[]):
+    def __init__(self, name='Unknown Gear', specialRules=[], weapons=[]):
         self.name = name
         self.specialRules = specialRules
+        self.weapons = weapons
 
     def __str__(self):
-        return '{0} ({1})'.format(self.name, ', '.join(self.specialRules))
+        s = self.name + ' ('
+        s += ', '.join(self.specialRules + [str(w) for w in self.weapons])
+        return s + ')'
 
-    # cost is handled by the unit class, because it depends on too much things
     def Cost(self, speed, quality):
-        return 0
+        cost = 0
+        for w in self.weapons:
+            cost += w.Cost(speed, quality)
+        return cost
 
 
 # Class for weapons
@@ -304,11 +310,14 @@ def main():
     railgun.Cost(12, 4)
     print(railgun)
 
+    gundrone = WarGear('Gun Drone', ["Regeneration"], [pulserifle, railgun])
+    print(gundrone)
+
     vehicle = Weapon('Vehicle', weaponRules=['Impact(3)'])
     vehicle.Cost(12, 4)
     print(vehicle)
 
-    grunt = Unit('Grunt', 5, 5, 4, [pulserifle], ['Good Shot'])
+    grunt = Unit('Grunt', 5, 5, 4, [pulserifle, gundrone], ['Good Shot'])
     print(grunt)
 
     grunt_cpt = Unit('Grunt_cpt', 1, 4, 4, [pulserifle], ['Tough(3)', 'Hero', 'Volley Fire'])

@@ -14,7 +14,6 @@
 "Frag Pod"                     : { "range" : 18, "attacks" : 1 , "ap" : 1 , "special" : ["Blast(6)", "Indirect"]},
 "Fusion Carbine"               : { "range" : 18, "attacks" : 1 , "ap" : 7 , "special" : ["Deadly"]},
 "Gatling Carbine"              : { "range" : 18, "attacks" : 4 , "ap" : 1 , "special" : []},
-"Gun Drone"                    : { "range" : 18, "attacks" : 2 , "ap" : 1 , "special" : ["Linked"]},
 "Heavy Gatling Carbine"        : { "range" : 36, "attacks" : 8 , "ap" : 2 , "special" : []},
 "Heavy Rail Rifle"             : { "range" : 48, "attacks" : 1 , "ap" : 4 , "special" : ["Deadly", "Linked"]},
 "Heavy Suit Fist"              : { "range" : 0 , "attacks" : 3 , "ap" : 2 , "special" : []},
@@ -24,7 +23,6 @@
 "Ion Tailgun"                  : { "range" : 30, "attacks" : 1 , "ap" : 3 , "special" : ["Blast(6)"]},
 "Jackal's Bayonet"             : { "range" : 24, "attacks" : 1 , "ap" : 2 , "special" : ["Sniper"]},
 "Marksman Rifle"               : { "range" : 24, "attacks" : 1 , "ap" : 2 , "special" : ["Sniper"]},
-"Missile Drone"                : { "range" : 36, "attacks" : 2 , "ap" : 3 , "special" : []},
 "Missile Pod"                  : { "range" : 36, "attacks" : 2 , "ap" : 3 , "special" : []},
 "Neutron Carbine"              : { "range" : 18, "attacks" : 1 , "ap" : 1 , "special" : []},
 "Plasma Rifle"                 : { "range" : 24, "attacks" : 1 , "ap" : 3 , "special" : []},
@@ -39,13 +37,15 @@
 "Sacred Spear"                 : { "range" : 0 , "attacks" : 3 , "ap" : 0 , "special" : []},
 "Smart Missile"                : { "range" : 30, "attacks" : 4 , "ap" : 1 , "special" : ["Indirect"]},
 "Sniper Pulse Rifle"           : { "range" : 30, "attacks" : 1 , "ap" : 1 , "special" : ["Sniper"]},
-"Spotter Drone"                : { "range" : 36, "attacks" : 1 , "ap" : 0 , "special" : ["Spotting Lasers"]},
-"Spotting Laser"               : { "range" : 36, "attacks" : 1 , "ap" : 0 , "special" : ["Spotting Lasers"]},
+"Spotting Laser"               : { "range" : 36, "attacks" : 1 , "ap" : 0 , "special" : ["Spotting"]},
 "Suit Fist"                    : { "range" : 0 , "attacks" : 2 , "ap" : 1 , "special" : []},
 "Titan Stomp"                  : { "range" : 0 , "attacks" : 3 , "ap" : 2 , "special" : []}
 }, "wargear" : {
-"Accelerator Drone"            : ["Accelerator"],
-"Inhibitor Drone"              : ["Inhibitor"],
-"Recon Drone"                  : ["Beacon"],
-"Shield Drone"                 : ["Regeneration"]
+"Accelerator Drone"            : {"special" : ["Accelerator"], "weapons" : []},
+"Inhibitor Drone"              : {"special" : ["Inhibitor"], "weapons" : []},
+"Recon Drone"                  : {"special" : ["Beacon"], "weapons" : []},
+"Shield Drone"                 : {"special" : ["Regeneration"], "weapons" : []},
+"Gun Drone"                    : {"special" : [], "weapons" : ["Linked Pulse Carbine"]},
+"Spotter Drone"                : {"special" : [], "weapons" : ["Spotting Laser"]},
+"Missile Drone"                : {"special" : [], "weapons" : ["Missile Pod"]}
 }}

@@ -23,25 +23,29 @@
 	\rowcolors{1}{white}{lgrey}
 	\begin{tabu} to \linewidth {Xc}
 		\csvreader[no head,before first line = \bf, late after line = \\,filter strcmp={#2}{\csvcoliii}, /csv/separator=semicolon ]{upgrades#1.csv}{}
-		{\csvcoli&\csvcolii}
+	{\ifthenelse{\equal{\csvcolii}{}}{\bf}{}\csvcoli&\csvcolii}
 	\end{tabu}
+}
+\newcommand{\UnitTable}[1]{
+\begin{center}
+	\hyphenpenalty=100000
+	\setlength\tabcolsep{3 pt}
+	\rowcolors{1}{white}{lgrey}
+	\footnotesize
+	\begin{tabu} to \linewidth {lccX[2]>{\raggedright}X[1]cc}
+		\bf Name [size]& \bf Qua& \bf Def& \bf Equipment& \bf Special Rules& \bf Upgrades& \bf Cost\\
+		\csvreader[no head, late after line=\\, /csv/separator=semicolon ]{units#1.csv}{}
+		{\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii}
+	\end{tabu}
+\end{center}
 }
 
 \begin{document}
 
 \maketitle
 
-\begin{center}
-\hyphenpenalty=100000
-\setlength\tabcolsep{3 pt}
-\rowcolors{1}{white}{lgrey}
-\footnotesize
-\begin{tabu} to \linewidth {lccX[2]>{\raggedright}X[1]cc}
-	\bf Name [size]& \bf Qua& \bf Def& \bf Equipment& \bf Special Rules& \bf Upgrades& \bf Cost\\
-	\csvreader[no head, late after line=\\, /csv/separator=semicolon ]{units1.csv}{}
-	{\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii\space pts}
-\end{tabu}
-\end{center}
+\UnitTable{1}
+
 \hyphenpenalty=100000
 \setlength\tabcolsep{3 pt}
 \footnotesize
@@ -63,6 +67,6 @@
 
 \end{center}
 \end{multicols*}
-
+\pagebreak
 
 \end{document}
