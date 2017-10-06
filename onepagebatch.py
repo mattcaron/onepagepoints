@@ -30,9 +30,17 @@ import copy
 
 def getEquipment(name):
     global equipments
+
     for equ in equipments:
         if equ.name == name:
             return equ
+
+    if name.endswith('s'):
+        singular = name[:-1]
+        for equ in equipments:
+            if equ.name == singular:
+                return equ
+
     print('Error equipment {0} Not found !'.format(name))
     return None
 
@@ -138,6 +146,7 @@ def main():
         jequipments = json.loads(f.read())
 
     equipments = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
+    equipments += [Weapon('Linked ' + name, w['range'], w['attacks'], w['ap'], ['Linked'] + w['special']) for name, w in jequipments['weapons'].items() if not 'Linked' in w['special'] and w['range'] > 0]
     equipments += [WarGear(name, rules) for name, rules in jequipments['wargear'].items()]
 
     with open(os.path.join(faction, "units1.json"), "r") as f:
