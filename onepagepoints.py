@@ -170,7 +170,6 @@ class Unit:
         pretty += ', '.join(self.specialRules)
         pretty += '\n\t'
         pretty += 'Defense {0} pts, Attack {1} pts, Other {2} pts\n'.format(self.defenseCost, self.attackCost, self.otherCost)
-
         return pretty
 
     def __copy__(self):
@@ -199,7 +198,7 @@ class Unit:
         quality = self.quality
         if 'Good Shot' in self.specialRules + self.wargearSp:
             quality = 4
-        for w in self.equipments:
+        for w in self.equipments + self.spEquipments:
             self.attackCost += w.Cost(self.speed, quality) * self.count
 
         self.attackCost = int(round(self.attackCost))
@@ -231,18 +230,19 @@ class Unit:
         self.globalMultiplier = 0
         self.tough = 1
         self.defense = self.basedefense
+        self.spEquipments = []
 
         specialRules = self.specialRules + self.wargearSp
 
         if 'Vehicle' in specialRules or 'Monster' in specialRules:
             smallStomp = Weapon('Monster Stomp', weaponRules=['Impact(3)'])
-            self.AddEquipment(smallStomp)
+            self.spEquipments.append(smallStomp)
             if 'Fear' not in specialRules:
                 specialRules.append('Fear')
 
         if 'Titan' in specialRules:
             titanStomp = Weapon('Titan Stomp', 0, 6, 2, ['Autohit'])
-            self.AddEquipment(titanStomp)
+            self.spEquipments.append(titanStomp)
             if 'Fear' not in specialRules:
                 specialRules.append('Fear')
 

@@ -26,6 +26,7 @@ from onepagepoints import *
 import json
 import os
 import copy
+import argparse
 
 
 def getEquipment(name):
@@ -134,8 +135,8 @@ def calculate_mean_upgrade_cost(costs):
     return ret
 
 
-def write_upgrade_csv(jupgrades, faction, page):
-    with open(os.path.join(faction, 'upgrades' + str(page) + '.csv'), 'w') as f:
+def write_upgrade_csv(jupgrades, upgradeFile):
+    with open(upgradeFile, 'w') as f:
         for group, upgrades in jupgrades.items():
             f.write(group + ' | ')
             for up in upgrades:
@@ -146,12 +147,9 @@ def write_upgrade_csv(jupgrades, faction, page):
                     f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEqu), points(cost[i]), group))
 
 
-def main():
+def generateFaction():
     global equipments
-
-    faction = "Tao"
-
-    with open(os.path.join(faction, "equipments.json"), "r") as f:
+    with open("equipments.json", "r") as f:
         jequipments = json.loads(f.read())
 
     weaponList = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
@@ -161,17 +159,37 @@ def main():
     warGearList = [WarGear(name, wargear['special'], getEquipments(wargear['weapons'])) for name, wargear in jequipments['wargear'].items()]
     equipments = {equ.name: equ for equ in warGearList + weaponList}
 
-    with open(os.path.join(faction, "units1.json"), "r") as f:
-        junits = json.loads(f.read())
+    allFiles = os.listdir(".")
+    for i in range(1, 10):
+        unitFile = 'units' + str(i) + '.json'
+        upgradeFile = 'upgrades' + str(i) + '.json'
+        if unitFile in allFiles and upgradeFile in allFiles:
+            print('page {}'.format(i))
+            with open(unitFile, "r") as f:
+                junits = json.loads(f.read())
+            with open(upgradeFile, "r") as f:
+                jupgrades = json.loads(f.read())
 
-    with open(os.path.join(faction, "upgrades1.json"), "r") as f:
-        jupgrades = json.loads(f.read())
+            for junit in junits:
+                calculate_unit_cost(junit, jupgrades)
 
-    for junit in junits:
-        calculate_unit_cost(junit, jupgrades)
+            write_unit_csv(junits, unitFile[:-4] + 'csv')
+            write_upgrade_csv(jupgrades, upgradeFile[:-4] + 'csv')
 
-    write_unit_csv(junits, os.path.join(faction, 'units1.csv'))
-    write_upgrade_csv(jupgrades, faction, 1)
+
+def main():
+    parser = argparse.ArgumentParser(description='This script will compute the Unit costs and upgrade costs for a faction, and write the .csv files for LaTeX')
+    parser.add_argument('path', metavar='path', type=str, nargs='+',
+                        help='path to the faction (should contain at list equipments.json, units1.json, upgrades1.json)')
+
+    args = parser.parse_args()
+
+    current_dir = os.getcwd()
+    for faction in args.path:
+        print("Building faction {}".format(faction))
+        os.chdir(faction)
+        generateFaction()
+        os.chdir(current_dir)
 
 
 if __name__ == "__main__":
