@@ -3,7 +3,7 @@
   "count" : 1,
   "quality" : 4,
   "defense" : 7,
-  "equipment" : ["Gatling Carbine", "Linked Pulse Carbines", "Linked Pulse Carbines"],
+  "equipment" : ["Gatling Carbine", "2x Linked Pulse Carbines"],
   "special" : ["Fast", "Strider", "Tough(3)", "Transport(11)", "Vehicle"],
   "upgrades" : ["A", "B", "C"]
 },{
@@ -11,7 +11,7 @@
   "count" : 1,
   "quality" : 4,
   "defense" : 8,
-  "equipment" : ["Railgun", "Linked Pulse Carbines", "Linked Pulse Carbines"],
+  "equipment" : ["Railgun", "2x Linked Pulse Carbines"],
   "special" : ["Fast", "Strider", "Tough(6)", "Vehicle"],
   "upgrades" : ["A", "B", "C", "D"]
 },{
@@ -19,7 +19,7 @@
   "count" : 1,
   "quality" : 4,
   "defense" : 6,
-  "equipment" : ["Gatling Carbine", "Linked Pulse Carbines", "Linked Pulse Carbines"],
+  "equipment" : ["Gatling Carbine", "2x Linked Pulse Carbines"],
   "special" : ["Fast", "Strider", "Tough(3)", "Vehicle"],
   "upgrades" : ["B", "C", "E"]
 },{
@@ -51,7 +51,7 @@
   "count" : 1,
   "quality" : 4,
   "defense" : 6,
-  "equipment" : ["Missile Pod", "Pulse Bombs", "Linked Ion Rifle", "Linked Ion Rifle"],
+  "equipment" : ["Missile Pod", "Pulse Bombs", "2x Linked Ion Rifle"],
   "special" : ["Flyer", "Tough(3)", "Vehicle"],
   "upgrades" : ["B", "I"]
 },{
@@ -67,7 +67,7 @@
   "count" : 1,
   "quality" : 4,
   "defense" : 8,
-  "equipment" : ["Titan Stomp", "Linked Flamethrower", "Cluster Rockets", "Pulse Cannon", "Linked Smart Missiles", "Destroyer Missiles", "Destroyer Missiles", "Destroyer Missiles", "Destroyer Missiles"],
+  "equipment" : ["Titan Stomp", "Linked Flamethrower", "Cluster Rockets", "Pulse Cannon", "Linked Smart Missiles", "4x Destroyer Missiles"],
   "special" : ["Titan", "Tough(9)", "Vehicle"],
   "upgrades" : ["K"]
 }]
