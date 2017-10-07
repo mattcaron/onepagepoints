@@ -27,6 +27,7 @@ import json
 import os
 import copy
 import argparse
+from collections import OrderedDict
 
 
 def getEquipment(name):
@@ -38,13 +39,28 @@ def getEquipment(name):
     if name.endswith('s'):
         singular = name[:-1]
         if singular in equipments:
-            return equipments[singular]
+            w = getEquipment(singular)
+            equipments[name] = Weapon(name, w.range, w.attacks, w.armorPiercing, w.weaponRules)
+            return equipments[name]
 
     print('Error equipment {0} Not found !'.format(name))
     return None
 
-
+# Return the list of equipments objects, from their name.
+# if the name start with "2x ", return twice the same object in the list.
 def getEquipments(names):
+    global equipments
+
+    for name in names:
+        if ' ' in name:
+            firstword, remaining = name.split(None, 1)
+            if firstword.endswith('x') and firstword[:-1].isdigit():
+                n = int(firstword[:-1])
+                position = names.index(name)
+                names.remove(name)
+                for i in range(n):
+                    names.insert(position, remaining)
+
     return [getEquipment(name) for name in names]
 
 
@@ -52,7 +68,6 @@ def getUnit(junit):
     global equipments
 
     unit_equipments = getEquipments(junit['equipment'])
-
     return Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
 
 
@@ -62,6 +77,19 @@ def points(n):
     if n == 1:
         return "1 pt"
     return '{} pts'.format(n)
+
+
+def pCount(n):
+    if n < 2:
+        return ''
+    return '{}x '.format(n)
+
+
+# Return a pretty string of the list of equipments
+# And prefix with 2x if the equipment is present twice.
+def prettyEquipments(equipments):
+    equWithCount = list(OrderedDict.fromkeys([(equ, equipments.count(equ)) for equ in equipments]))
+    return [pCount(c) + str(e) for e, c in equWithCount]
 
 
 # Calculate the cost of an upgrade on a unit
@@ -114,7 +142,7 @@ def write_unit_csv(junits, outfile):
     with open(outfile, 'w') as f:
         for junit in junits:
             unit = getUnit(junit)
-            equ = "\\newline ".join([str(equ) for equ in unit.equipments])
+            equ = "\\newline ".join(prettyEquipments(unit.equipments))
             sp = ", ".join(unit.specialRules)
             up = ", ".join(junit['upgrades'])
             line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, points(unit.cost))
@@ -143,13 +171,13 @@ def write_upgrade_csv(jupgrades, upgradeFile):
                 f.write(up['text'] + ';;' + group + '\n')
                 cost = calculate_mean_upgrade_cost(up['cost'])
                 for i, addEqu in enumerate(up['add']):
-                    prettyEqu = [str(getEquipment(equ)) for equ in addEqu]
-                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEqu), points(cost[i]), group))
+                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEquipments(addEqu)), points(cost[i]), group))
 
 
 def generateFaction():
     global equipments
     with open("equipments.json", "r") as f:
+        print('Processing {}'.format(f.name))
         jequipments = json.loads(f.read())
 
     weaponList = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
@@ -164,10 +192,11 @@ def generateFaction():
         unitFile = 'units' + str(i) + '.json'
         upgradeFile = 'upgrades' + str(i) + '.json'
         if unitFile in allFiles and upgradeFile in allFiles:
-            print('page {}'.format(i))
             with open(unitFile, "r") as f:
+                print('Processing {}'.format(unitFile))
                 junits = json.loads(f.read())
             with open(upgradeFile, "r") as f:
+                print('Processing {}'.format(upgradeFile))
                 jupgrades = json.loads(f.read())
 
             for junit in junits:

@@ -92,7 +92,7 @@ class Weapon:
         self.cost = 0
 
     def __str__(self):
-        s = self.name + " ("
+        s = self.name + ' ('
         if self.range > 0:
             s += '{0}", '.format(self.range)
         s += 'A{0}'.format(self.attacks)
@@ -292,23 +292,27 @@ def main():
 
     flamethrower = Weapon('Flamethrower', 12, 6, 0)
     flamethrower.Cost(12, 4)
-    print(flamethrower)
+    print(flamethrower.Pretty())
 
     gatling = Weapon('Gatling', 18, 4, 1)
     gatling.Cost(12, 4)
-    print(gatling)
+    print(gatling.Pretty())
 
     pulserifle = Weapon('Pulse Rifle', 30, 1, 1)
     pulserifle.Cost(12, 4)
-    print(pulserifle)
+    print(pulserifle.Pretty())
 
     plasma = Weapon('Plasma', 24, 1, 3, '')
     plasma.Cost(12, 4)
-    print(plasma)
+    print(plasma.Pretty())
+
+    fusion = Weapon('Fusion Carbine', 18, 1, 7, ['Deadly'])
+    fusion.Cost(12, 4)
+    print(fusion.Pretty())
 
     railgun = Weapon('Railgun', 48, 1, 4, ['Linked', 'Deadly'])
     railgun.Cost(12, 4)
-    print(railgun)
+    print(railgun.Pretty())
 
     gundrone = WarGear('Gun Drone', ["Regeneration"], [pulserifle, railgun])
     print(gundrone)
