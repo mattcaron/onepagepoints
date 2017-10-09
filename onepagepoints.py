@@ -272,6 +272,9 @@ class Unit:
             self.speed *= 1.2
         if 'Flying' in specialRules:
             self.speed *= 1.3
+        # Flyers moves 36" but only in straight line.
+        if 'Flyer' in specialRules:
+            self.speed = 24
 
         for s in specialRules:
             if s.startswith('Tough'):
