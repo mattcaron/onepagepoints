@@ -21,6 +21,10 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
+from pyexcel_ods3 import get_data, save_data
+import json
+from collections import OrderedDict
+
 """
 This scripts helps to generate the json files for a faction.
 It takes a libreoffice calc ".ods" file, and generate the list
@@ -29,9 +33,6 @@ The libreoffice calc file can be done with just copy/paste from the original pdf
 and a few "manual" operation
 """
 
-from pyexcel_ods3 import get_data, save_data
-import json
-from collections import OrderedDict
 
 # Parse the equipment list to find characteristics of individual weapons
 def parse_equipment(equipment):
@@ -47,13 +48,13 @@ def parse_equipment(equipment):
         elif char == ')':
             nested -= 1
             if nested == 0:
-                weapons_raw.append((equipment[namestart:start].strip(' ,'),equipment[start + 1:index]))
+                weapons_raw.append((equipment[namestart:start].strip(' ,'), equipment[start + 1:index]))
                 namestart = index + 1
 
     for w in weapons_raw:
         name = w[0]
         wprange = 0
-        armorPiercing= 0
+        armorPiercing = 0
         attacks = 0
         special = []
         count = 1
@@ -67,14 +68,14 @@ def parse_equipment(equipment):
             elif c.startswith('A') and c[1:].isdigit():
                 attacks = int(c[1:])
             else:
-                special.append(c.lower().strip())
+                special.append(c.strip())
 
-        if 'linked' in name.lower().split():
-            if not 'linked' in special:
-                special.append('linked')
+        if 'Linked' in name.split():
+            if 'Linked' not in special:
+                special.append('Linked')
 
         # check for 2x or Nx if the same wepon is preset twice or more
-        firstword = name.lower().split()[0]
+        firstword = name.split()[0]
         if firstword.endswith('x'):
             if firstword[:-1].isdigit():
                 count = int(firstword[:-1])
@@ -86,13 +87,16 @@ def parse_equipment(equipment):
             weapons.append(new_weapon)
     return weapons
 
+
 def parse_upgrades(upgrades):
     return [up.strip() for up in upgrades.split(',')]
 
+
 def parse_special(special):
-    special = special.lower().split(',')
+    special = special.split(',')
     # strip all whitespace
     return [sp.strip() for sp in special]
+
 
 def main():
 
@@ -117,8 +121,8 @@ def main():
 
             for e in equipment:
                 key = '"' + e[0] + '"'
-                if not key in alljweapons:
-                    alljweapons[key] = OrderedDict([('range', e[1]),('attacks', e[2]),('ap', e[3]),('special', e[4])])
+                if key not in alljweapons:
+                    alljweapons[key] = OrderedDict([('range', e[1]), ('attacks', e[2]), ('ap', e[3]), ('special', e[4])])
 
             equipment_name = [e[0] for e in equipment]
             ju = OrderedDict([('name', dunit['name']), ('count', dunit['count']), ('quality', dunit['qua']), ('defense', dunit['def']), ('equipment', equipment_name), ('special', parse_special(dunit['special'])), ('upgrades', parse_upgrades(dunit['upgrades']))])
@@ -134,6 +138,7 @@ def main():
         f.write('{\n')
         f.write(",\n".join(['{:<30} : '.format(k) + json.dumps(alljweapons[k]) for k in alljweapons]))
         f.write("\n}\n")
+
 
 if __name__ == "__main__":
     # execute only if run as a script
