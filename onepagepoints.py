@@ -264,16 +264,8 @@ class Unit:
                 self.globalMultiplier += 0.10
         if 'Scout' in specialRules:
             self.globalMultiplier += 0.15
-        if 'Inspiring' in specialRules:
-            self.globalAdd += 30
-        if 'Volley Fire' in specialRules:
-            self.globalAdd += 30
         if 'Beacon' in specialRules:
             self.globalAdd += 10
-        if 'Inhibitor' in specialRules:
-            self.globalAdd += 10
-        if 'Accelerator' in specialRules:
-            self.globalAdd += 15
         if 'Fear' in specialRules:
             self.globalAdd += 5
         if 'Strider' in specialRules:

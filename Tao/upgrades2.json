@@ -29,7 +29,7 @@
     },{
       "text" : "Replace Linked Flamethrower",
       "remove" : ["Linked Flamethrower"],
-      "add" : [["Linked Gatling Carbine"], ["Linked Fusion Carbines"]]
+      "add" : [["Linked Gatling Carbine"], ["Linked Fusion Carbine"]]
     },{
       "text" : "Upgrade with up to two",
       "add" : [["Stealth Drone"]]

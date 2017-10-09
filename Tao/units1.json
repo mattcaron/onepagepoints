@@ -12,7 +12,7 @@
   "quality" : 4,
   "defense" : 4,
   "equipment" : ["Pulse Rifle", "Ritual Dagger"],
-  "special" : ["Hero", "Tough(3)", "Volley fire"],
+  "special" : ["Hero", "Tough(3)", "Volley Fire"],
   "upgrades" : ["B"]
 },{
   "name" : "Sage",

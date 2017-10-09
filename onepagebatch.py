@@ -46,6 +46,7 @@ def getEquipment(name):
     print('Error equipment {0} Not found !'.format(name))
     return None
 
+
 # Return the list of equipments objects, from their name.
 # if the name start with "2x ", return twice the same object in the list.
 def getEquipments(names):
@@ -69,6 +70,12 @@ def getUnit(junit):
 
     unit_equipments = getEquipments(junit['equipment'])
     return Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
+
+
+def getFactionCost(unit):
+    global factionRules
+
+    return sum([factionRules[r] for r in unit.specialRules + unit.wargearSp if r in factionRules])
 
 
 def points(n):
@@ -100,7 +107,7 @@ def calculate_upgrade_cost(unit, to_remove, to_add, all):
     if not all:
         new_unit.SetCount(1)
 
-    prev_cost = new_unit.cost
+    prev_cost = new_unit.cost + getFactionCost(unit)
 
     new_unit.RemoveEquipment(getEquipments(to_remove))
 
@@ -109,7 +116,7 @@ def calculate_upgrade_cost(unit, to_remove, to_add, all):
         add_unit = copy.copy(new_unit)
         add_unit.AddEquipment(getEquipments(upgrade))
 
-        up_cost = add_unit.cost - prev_cost
+        up_cost = add_unit.cost + getFactionCost(add_unit) - prev_cost
         costs.append(up_cost)
     return costs
 
@@ -142,10 +149,11 @@ def write_unit_csv(junits, outfile):
     with open(outfile, 'w') as f:
         for junit in junits:
             unit = getUnit(junit)
+            cost = unit.cost + getFactionCost(unit)
             equ = "\\newline ".join(prettyEquipments(unit.equipments))
             sp = ", ".join(unit.specialRules)
             up = ", ".join(junit['upgrades'])
-            line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, points(unit.cost))
+            line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, points(cost))
             f.write(line)
 
 
@@ -171,11 +179,13 @@ def write_upgrade_csv(jupgrades, upgradeFile):
                 f.write(up['text'] + ';;' + group + '\n')
                 cost = calculate_mean_upgrade_cost(up['cost'])
                 for i, addEqu in enumerate(up['add']):
-                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEquipments(addEqu)), points(cost[i]), group))
+                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEquipments(getEquipments(addEqu))), points(cost[i]), group))
 
 
 def generateFaction():
     global equipments
+    global factionRules
+
     with open("equipments.json", "r") as f:
         print('Processing {}'.format(f.name))
         jequipments = json.loads(f.read())
@@ -186,6 +196,8 @@ def generateFaction():
 
     warGearList = [WarGear(name, wargear['special'], getEquipments(wargear['weapons'])) for name, wargear in jequipments['wargear'].items()]
     equipments = {equ.name: equ for equ in warGearList + weaponList}
+
+    factionRules = jequipments['factionRules']
 
     allFiles = os.listdir(".")
     for i in range(1, 10):

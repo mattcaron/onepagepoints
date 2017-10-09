@@ -47,12 +47,15 @@ def format_equipments(jsonFile):
 
     weapons = data['weapons']
     wargear = data['wargear']
+    factionrules = data['factionRules']
 
     with open(jsonFile, "w") as f:
         f.write('{"weapons" : {\n')
         f.write(",\n".join(['{:<30} : '.format('"' + w + '"') + format_weapon(weapons[w]) for w in sorted(weapons)]))
         f.write('\n}, "wargear" : {\n')
         f.write(",\n".join(['{:<30} : '.format('"' + w + '"') + json.dumps(wargear[w]) for w in sorted(wargear)]))
+        f.write('\n}, "factionRules" : {\n')
+        f.write(",\n".join(['{:<30} : '.format('"' + r + '"') + json.dumps(factionrules[r]) for r in sorted(factionrules)]))
         f.write('\n}}\n')
 
 
@@ -91,7 +94,7 @@ def format_batch(batch):
 
 
 def format_group(groupName, group):
-    s = '"{0}" : [{{ \n'.format(groupName)
+    s = '"{0}" : [{{\n'.format(groupName)
     s += '    },{\n'.join([format_batch(batch) for batch in group])
     return s
 

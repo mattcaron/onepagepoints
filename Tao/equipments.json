@@ -58,4 +58,11 @@
 "Shield Drone"                 : {"special": ["Regeneration"], "weapons": []},
 "Spotter Drone"                : {"special": [], "weapons": ["Spotting Laser"]},
 "Stealth Drone"                : {"special": ["Stealth+"], "weapons": []}
+}, "factionRules" : {
+"Accelerator"                  : 15,
+"Anti-Charge System"           : 10,
+"Inhibitor"                    : 10,
+"Inspiring"                    : 30,
+"Stealth+"                     : 15,
+"Volley Fire"                  : 30
 }}
