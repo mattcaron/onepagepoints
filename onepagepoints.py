@@ -21,6 +21,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
+import copy
+
 # Adjust defense and attack cost, to match onepagerules current prices
 adjust_defense_cost = 0.8
 adjust_attack_cost = 0.8
@@ -91,6 +93,9 @@ class Weapon:
         self.specialRules = []
         self.cost = 0
 
+    def __repr__(self):
+        return "{0}({1})".format(self.name, self.__dict__)
+
     def __str__(self):
         s = self.name + ' ('
         if self.range > 0:
@@ -151,6 +156,50 @@ class Weapon:
         return self.cost
 
 
+class Armory(dict):
+    # Armory class is a dictionnary of all Weapons and WarGear for a faction.
+    def __init__(self, *args):
+        dict.__init__(self, args)
+
+    def getOne(self, name):
+        if name in self:
+            return self[name]
+
+        if name.endswith('s'):
+            singular = name[:-1]
+            if singular in self:
+                self[name] = copy.copy(self[singular])
+                self[name].name = name
+                return self[name]
+
+        print('Error equipment {0} Not found !'.format(name))
+        return None
+
+# Return the list of equipments objects, from their names.
+# if the name start with "2x ", return twice the same object in the list.
+    def get(self, names):
+        for name in names:
+            if ' ' in name:
+                firstword, remaining = name.split(' ', 1)
+                if firstword.endswith('x') and firstword[:-1].isdigit():
+                    n = int(firstword[:-1])
+                    position = names.index(name)
+                    names.remove(name)
+                    for i in range(n):
+                        names.insert(position, remaining)
+
+        return [self.getOne(name) for name in names]
+
+    def add(self, equipments):
+        for equipment in equipments:
+            self[equipment.name] = equipment
+
+            if isinstance(equipment, Weapon):
+                if equipment.range > 0 and not 'Linked' in equipment.specialRules:
+                    name = 'Linked ' + equipment.name
+                    self[name] = Weapon(name, equipment.range, equipment.attacks, equipment.armorPiercing, ['Linked'] + equipment.weaponRules)
+
+
 class Unit:
     def __init__(self, name='Unknown Unit', count=1, quality=4, defense=2, equipments=[], specialRules=[]):
         self.name = name
@@ -174,6 +223,10 @@ class Unit:
 
     def __copy__(self):
         return Unit(self.name, self.count, self.quality, self.basedefense, self.equipments.copy(), self.specialRules.copy())
+
+    @classmethod
+    def from_dict(self, data, armory):
+        return self(data['name'], data['count'], data['quality'], data['defense'], armory.get(data['equipment']), data['special'])
 
     def Update(self):
         self.wargearSp = [sp for equ in self.equipments for sp in equ.specialRules]

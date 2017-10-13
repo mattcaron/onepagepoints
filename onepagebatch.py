@@ -30,48 +30,6 @@ import argparse
 from collections import OrderedDict
 
 
-def getEquipment(name):
-    global equipments
-
-    if name in equipments:
-        return equipments[name]
-
-    if name.endswith('s'):
-        singular = name[:-1]
-        if singular in equipments:
-            w = getEquipment(singular)
-            equipments[name] = Weapon(name, w.range, w.attacks, w.armorPiercing, w.weaponRules)
-            return equipments[name]
-
-    print('Error equipment {0} Not found !'.format(name))
-    return None
-
-
-# Return the list of equipments objects, from their name.
-# if the name start with "2x ", return twice the same object in the list.
-def getEquipments(names):
-    global equipments
-
-    for name in names:
-        if ' ' in name:
-            firstword, remaining = name.split(None, 1)
-            if firstword.endswith('x') and firstword[:-1].isdigit():
-                n = int(firstword[:-1])
-                position = names.index(name)
-                names.remove(name)
-                for i in range(n):
-                    names.insert(position, remaining)
-
-    return [getEquipment(name) for name in names]
-
-
-def getUnit(junit):
-    global equipments
-
-    unit_equipments = getEquipments(junit['equipment'])
-    return Unit(junit['name'], junit['count'], junit['quality'], junit['defense'], unit_equipments, junit['special'])
-
-
 def getFactionCost(unit):
     global factionRules
 
@@ -103,18 +61,20 @@ def prettyEquipments(equipments):
 # If the upgrade is only for one model, set the unit count to 1
 # remove equipment, add new equipment and calculate the new cost.
 def calculate_upgrade_cost(unit, to_remove, to_add, all):
+    global armory
+
     new_unit = copy.copy(unit)
     if not all:
         new_unit.SetCount(1)
 
     prev_cost = new_unit.cost + getFactionCost(unit)
 
-    new_unit.RemoveEquipment(getEquipments(to_remove))
+    new_unit.RemoveEquipment(armory.get(to_remove))
 
     costs = []
     for upgrade in to_add:
         add_unit = copy.copy(new_unit)
-        add_unit.AddEquipment(getEquipments(upgrade))
+        add_unit.AddEquipment(armory.get(upgrade))
 
         up_cost = add_unit.cost + getFactionCost(add_unit) - prev_cost
         costs.append(up_cost)
@@ -134,8 +94,9 @@ def calculate_upgrade_group_cost(unit, upgrade_group):
 
 
 def calculate_unit_cost(junit, jupgrades):
+    global armory
 
-    unit = getUnit(junit)
+    unit = Unit.from_dict(junit, armory)
 
     up = junit['upgrades']
     for upgrade_group in junit['upgrades']:
@@ -146,9 +107,11 @@ def calculate_unit_cost(junit, jupgrades):
 
 
 def write_unit_csv(junits, outfile):
+    global armory
+
     with open(outfile, 'w') as f:
         for junit in junits:
-            unit = getUnit(junit)
+            unit = Unit.from_dict(junit, armory)
             cost = unit.cost + getFactionCost(unit)
             equ = "\\newline ".join(prettyEquipments(unit.equipments))
             sp = ", ".join(unit.specialRules)
@@ -172,6 +135,8 @@ def calculate_mean_upgrade_cost(costs):
 
 
 def write_upgrade_csv(jupgrades, upgradeFile):
+    global armory
+
     with open(upgradeFile, 'w') as f:
         for group, upgrades in jupgrades.items():
             f.write(group + ' | ')
@@ -179,23 +144,20 @@ def write_upgrade_csv(jupgrades, upgradeFile):
                 f.write(up['text'] + ';;' + group + '\n')
                 cost = calculate_mean_upgrade_cost(up['cost'])
                 for i, addEqu in enumerate(up['add']):
-                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEquipments(getEquipments(addEqu))), points(cost[i]), group))
+                    f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEquipments(armory.get(addEqu))), points(cost[i]), group))
 
 
 def generateFaction():
-    global equipments
+    global armory
     global factionRules
 
     with open("equipments.json", "r") as f:
         print('Processing {}'.format(f.name))
         jequipments = json.loads(f.read())
 
-    weaponList = [Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()]
-    weaponList += [Weapon('Linked ' + name, w['range'], w['attacks'], w['ap'], ['Linked'] + w['special']) for name, w in jequipments['weapons'].items() if 'Linked' not in w['special'] and w['range'] > 0]
-    equipments = {equ.name: equ for equ in weaponList}
-
-    warGearList = [WarGear(name, wargear['special'], getEquipments(wargear['weapons'])) for name, wargear in jequipments['wargear'].items()]
-    equipments = {equ.name: equ for equ in warGearList + weaponList}
+    armory = Armory()
+    armory.add([Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()])
+    armory.add([WarGear(name, wargear['special'], armory.get(wargear['weapons'])) for name, wargear in jequipments['wargear'].items()])
 
     factionRules = jequipments['factionRules']
 
