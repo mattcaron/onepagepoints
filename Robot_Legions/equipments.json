@@ -1,0 +1,42 @@
+{"weapons" : {
+"Antimatter Cannon"            : { "range" : 24, "attacks" : 1 , "ap" : 3 , "special" : ["Blast(6)"]},
+"Antimatter Pistol"            : { "range" : 12, "attacks" : 1 , "ap" : 2 , "special" : []},
+"Antimatter Pistols"           : { "range" : 12, "attacks" : 1 , "ap" : 2 , "special" : []},
+"Antimatter Rifle"             : { "range" : 24, "attacks" : 1 , "ap" : 2 , "special" : ["Blast(3)"]},
+"Death Beam"                   : { "range" : 24, "attacks" : 1 , "ap" : 8 , "special" : ["Blast(3)"]},
+"Death Gaze"                   : { "range" : 12, "attacks" : 1 , "ap" : 0 , "special" : ["Deadly", "Rending"]},
+"Doom Cannon"                  : { "range" : 48, "attacks" : 1 , "ap" : 6 , "special" : ["Blast(3)"]},
+"Energy Rods"                  : { "range" : 12, "attacks" : 1 , "ap" : 1 , "special" : []},
+"Energy Scythe"                : { "range" : 0 , "attacks" : 3 , "ap" : 5 , "special" : []},
+"Energy Scythes"               : { "range" : 0 , "attacks" : 2 , "ap" : 5 , "special" : []},
+"Energy Staff"                 : { "range" : 12, "attacks" : 3 , "ap" : 1 , "special" : []},
+"Energy Sword"                 : { "range" : 0 , "attacks" : 3 , "ap" : 2 , "special" : []},
+"Energy Swords"                : { "range" : 0 , "attacks" : 2 , "ap" : 2 , "special" : []},
+"Flux Cannon"                  : { "range" : 24, "attacks" : 4 , "ap" : 3 , "special" : ["Flux"]},
+"Flux Rifle"                   : { "range" : 24, "attacks" : 1 , "ap" : 1 , "special" : ["Flux"]},
+"Flux Rifles"                  : { "range" : 24, "attacks" : 1 , "ap" : 1 , "special" : ["Flux"]},
+"Fusion Ray"                   : { "range" : 24, "attacks" : 2 , "ap" : 7 , "special" : ["Deadly"]},
+"Gauss Cannon"                 : { "range" : 24, "attacks" : 2 , "ap" : 1 , "special" : ["Rending"]},
+"Gauss Cannons"                : { "range" : 24, "attacks" : 2 , "ap" : 1 , "special" : ["Rending"]},
+"Gauss Machinegun"             : { "range" : 24, "attacks" : 3 , "ap" : 1 , "special" : ["Rending"]},
+"Gauss Rifle Array"            : { "range" : 24, "attacks" : 5 , "ap" : 0 , "special" : ["Rending"]},
+"Gauss Rifles"                 : { "range" : 24, "attacks" : 1 , "ap" : 0 , "special" : ["Rending"]},
+"Gauss Sword"                  : { "range" : 0 , "attacks" : 3 , "ap" : 1 , "special" : ["Rending"]},
+"Gauss Swords"                 : { "range" : 0 , "attacks" : 2 , "ap" : 1 , "special" : ["Rending"]},
+"Heavy Antimatter Cannon"      : { "range" : 24, "attacks" : 1 , "ap" : 4 , "special" : ["Blast(6)"]},
+"Heavy Flux Cannon"            : { "range" : 24, "attacks" : 5 , "ap" : 3 , "special" : ["Flux"]},
+"Heavy Gauss Cannon"           : { "range" : 36, "attacks" : 1 , "ap" : 5 , "special" : ["Deadly", "Rending"]},
+"Metal Claws"                  : { "range" : 0 , "attacks" : 3 , "ap" : 0 , "special" : ["Rending"]},
+"Metal Fangs"                  : { "range" : 0 , "attacks" : 3 , "ap" : 2 , "special" : ["Rending"]},
+"Sniper Carbines"              : { "range" : 24, "attacks" : 1 , "ap" : 2 , "special" : ["Sniper"]},
+"Spider Fangs"                 : { "range" : 0 , "attacks" : 2 , "ap" : 2 , "special" : []},
+"Spirit Attack"                : { "range" : 0 , "attacks" : 4 , "ap" : 3 , "special" : ["Rending"]},
+"Swarm Attacks"                : { "range" : 0 , "attacks" : 4 , "ap" : 0 , "special" : ["Rending"]},
+"Walker Stomp"                 : { "range" : 0 , "attacks" : 3 , "ap" : 3 , "special" : []},
+"Wrist-Mounted Flamer"         : { "range" : 12, "attacks" : 6 , "ap" : 0 , "special" : []},
+"Wrist-Mounted Laser Cannon"   : { "range" : 48, "attacks" : 1 , "ap" : 6 , "special" : ["Deadly", "Limited"]}
+}, "wargear" : {
+
+}, "factionRules" : {
+
+}}

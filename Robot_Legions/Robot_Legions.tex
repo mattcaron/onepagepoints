@@ -1,0 +1,71 @@
+
+\documentclass[10pt]{article}
+
+%opening
+\title{Grimdark Future – Robot Legions v1.2}
+\author{by Gaetano Ferrara (http://onepagerules.wordpress.com/) and modified by Jocelyn Falempe}
+\date{}
+
+\usepackage{comment}
+\usepackage[margin=1cm]{geometry}
+
+\usepackage{tabu}
+\usepackage{csvsimple}
+\usepackage[table]{xcolor}
+\usepackage{multicol}
+\usepackage{fontspec}
+\setmainfont{Carlito}
+
+\definecolor{lgrey}{rgb}{0.82, 0.82, 0.82}
+
+\newcommand{\UpgradeGroup}[2]{
+	\hyphenpenalty=100000
+	\setlength\tabcolsep{3 pt}
+	\footnotesize
+
+	\vspace{6pt}
+	\rowcolors{1}{white}{lgrey}
+	\begin{tabu} to \linewidth {Xc}
+		\csvreader[no head,before first line = \bf, late after line = \\,filter strcmp={#2}{\csvcoliii}, /csv/separator=semicolon ]{upgrades#1.csv}{}
+	{\ifthenelse{\equal{\csvcolii}{}}{\bf}{}\csvcoli&\csvcolii}
+	\end{tabu}
+}
+\newcommand{\UnitTable}[1]{
+\begin{center}
+	\hyphenpenalty=100000
+	\setlength\tabcolsep{3 pt}
+	\rowcolors{1}{white}{lgrey}
+	\footnotesize
+	\begin{tabu} to \linewidth {lccX[2]>{\raggedright}X[1]cc}
+		\bf Name [size]& \bf Qua& \bf Def& \bf Equipment& \bf Special Rules& \bf Upgrades& \bf Cost\\
+		\csvreader[no head, late after line=\\, /csv/separator=semicolon ]{units#1.csv}{}
+		{\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii}
+	\end{tabu}
+\end{center}
+}
+
+\begin{document}
+
+\maketitle
+
+\UnitTable{}
+
+
+\begin{multicols*}{3}[]
+\begin{center}
+
+%\UpgradeGroup{1}{A}
+%\UpgradeGroup{1}{B}
+%\UpgradeGroup{1}{C}
+%\UpgradeGroup{1}{D}
+%\UpgradeGroup{1}{E}
+%\UpgradeGroup{1}{F}
+%\UpgradeGroup{1}{G}
+%\UpgradeGroup{1}{H}
+%\UpgradeGroup{1}{I}
+%\UpgradeGroup{1}{J}
+
+
+\end{center}
+\end{multicols*}
+\end{document}
