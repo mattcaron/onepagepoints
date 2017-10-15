@@ -162,7 +162,7 @@ def generateFaction():
     factionRules = jequipments['factionRules']
 
     allFiles = os.listdir(".")
-    for i in range(1, 10):
+    for i in ['', 1, 2, 3, 4, 5]:
         unitFile = 'units' + str(i) + '.json'
         upgradeFile = 'upgrades' + str(i) + '.json'
         if unitFile in allFiles and upgradeFile in allFiles:

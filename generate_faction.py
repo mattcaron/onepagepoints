@@ -23,6 +23,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from pyexcel_ods3 import get_data, save_data
 import json
+import argparse
+import string
 from collections import OrderedDict
 
 """
@@ -36,6 +38,8 @@ and a few "manual" operation
 
 # Parse the equipment list to find characteristics of individual weapons
 def parse_equipment(equipment):
+    global alljweapons
+
     nested = 0
     weapons_raw = []
     weapons = []
@@ -70,26 +74,29 @@ def parse_equipment(equipment):
             else:
                 special.append(c.strip())
 
-        if 'Linked' in name.split():
-            if 'Linked' not in special:
-                special.append('Linked')
+        weapons.append(name)
 
-        # check for 2x or Nx if the same wepon is preset twice or more
+        # remove 2x from the weapon name
         firstword = name.split()[0]
         if firstword.endswith('x'):
             if firstword[:-1].isdigit():
-                count = int(firstword[:-1])
-                # remove 2x from the name
                 name = name[len(firstword) + 1:]
 
-        new_weapon = [name, wprange, attacks, armorPiercing, special]
-        for i in range(count):
-            weapons.append(new_weapon)
+        # remove Linked from weapon name
+        if name.split()[0] == 'Linked':
+            if 'Linked' in special:
+                special.remove('Linked')
+            name = ' '.join(name.split()[1:])
+
+        name = '"' + name + '"'
+        if name not in alljweapons:
+            alljweapons[name] = OrderedDict([('range', wprange), ('attacks', attacks), ('ap', armorPiercing), ('special', special)])
+
     return weapons
 
 
 def parse_upgrades(upgrades):
-    return [up.strip() for up in upgrades.split(',')]
+    return [up.strip(string.whitespace + '-') for up in upgrades.split(',')]
 
 
 def parse_special(special):
@@ -98,46 +105,58 @@ def parse_special(special):
     return [sp.strip() for sp in special]
 
 
-def main():
-
+def parse_units(name, data):
+    global alljweapons
     column_order = ['name', 'count', 'qua', 'def', 'equipment', 'special', 'upgrades']
+    alljunits = []
+    for row in data[1:]:
+        dunit = {}
+        if len(row) < len(column_order):
+            continue
 
-    data = get_data("Tao_spec.ods")
+        for i, col in enumerate(column_order):
+            dunit[col] = row[i]
+
+        equipment = parse_equipment(dunit['equipment'])
+
+        ju = OrderedDict([('name', dunit['name']), ('count', dunit['count']), ('quality', dunit['qua']), ('defense', dunit['def']), ('equipment', equipment), ('special', parse_special(dunit['special'])), ('upgrades', parse_upgrades(dunit['upgrades']))])
+        alljunits.append(ju)
+
+    with open(name + '.json', 'w') as f:
+        f.write(json.dumps(alljunits, indent=2))
+
+
+def parse_weapons(data):
+    for row in data:
+        parse_equipment(row[0])
+
+
+def main():
+    global alljweapons
+
+    parser = argparse.ArgumentParser(description='Parse ods file to help import pdf into json')
+    parser.add_argument('fname', metavar='fname', type=str,
+                        help='file to parse')
+
+    args = parser.parse_args()
+
+    data = get_data(args.fname)
 
     alljweapons = {}
     unitpage = 1
 
     for sheet in data:
-        alljunits = []
-        for row in data[sheet][1:]:
-            dunit = {}
-            if len(row) < len(column_order):
-                continue
+        if sheet.startswith('units'):
+            parse_units(sheet, data[sheet])
 
-            for i, col in enumerate(column_order):
-                dunit[col] = row[i]
+        else:
+            parse_weapons(data[sheet])
 
-            equipment = parse_equipment(dunit['equipment'])
-
-            for e in equipment:
-                key = '"' + e[0] + '"'
-                if key not in alljweapons:
-                    alljweapons[key] = OrderedDict([('range', e[1]), ('attacks', e[2]), ('ap', e[3]), ('special', e[4])])
-
-            equipment_name = [e[0] for e in equipment]
-            ju = OrderedDict([('name', dunit['name']), ('count', dunit['count']), ('quality', dunit['qua']), ('defense', dunit['def']), ('equipment', equipment_name), ('special', parse_special(dunit['special'])), ('upgrades', parse_upgrades(dunit['upgrades']))])
-            alljunits.append(ju)
-
-        with open('units' + str(unitpage) + '.json', 'w') as f:
-            f.write(json.dumps(alljunits, indent=2))
-
-        alljunits = []
-        unitpage += 1
-
-    with open('weapons.json', 'w') as f:
-        f.write('{\n')
-        f.write(",\n".join(['{:<30} : '.format(k) + json.dumps(alljweapons[k]) for k in alljweapons]))
-        f.write("\n}\n")
+    with open('equipments.json', 'w') as f:
+        f.write('{"weapons" : {\n')
+        f.write(',\n'.join(['{:<30} : '.format(k) + json.dumps(alljweapons[k]) for k in alljweapons]))
+        f.write('\n}, "wargear" : {\n')
+        f.write('\n}, "factionRules" : {\n}}\n')
 
 
 if __name__ == "__main__":
