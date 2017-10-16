@@ -3,11 +3,17 @@ FACTIONS = Tao Robot_Legions
 TEX := $(foreach d,$(FACTIONS),$(wildcard $(d)/*.tex))
 PDF := $(TEX:.tex=.pdf)
 
+CLEAN := $(foreach d,$(FACTIONS),$(wildcard $(d)/*.csv) $(wildcard $(d)/*.pdf))
+
 define add_dep =
 $(1): $(2)
 endef
 
 all: $(PDF)
+
+clean: $(CLEAN)
+	@echo Removing $(CLEAN)
+	@rm -f $(CLEAN)
 
 %.pdf : %.tex
 	@rm -f $(@D)/*.csv
