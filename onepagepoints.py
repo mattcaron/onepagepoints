@@ -131,6 +131,9 @@ class Weapon:
             elif s == 'Rending':
                 # rending is 1/6 of having AP(8)
                 rending = (1 / 6) * (ap_cost(8) - ap_cost(self.armorPiercing))
+            elif s == 'Flux':
+                # Flux is statistically like having quality +2
+                quality -= 2
             elif s.startswith('Blast'):
                 sfactor *= int(s[6:-1])
             elif s.startswith('Impact'):
@@ -195,7 +198,7 @@ class Armory(dict):
             self[equipment.name] = equipment
 
             if isinstance(equipment, Weapon):
-                if equipment.range > 0 and not 'Linked' in equipment.specialRules:
+                if equipment.range > 0 and 'Linked' not in equipment.specialRules:
                     name = 'Linked ' + equipment.name
                     self[name] = Weapon(name, equipment.range, equipment.attacks, equipment.armorPiercing, ['Linked'] + equipment.weaponRules)
 
@@ -266,6 +269,8 @@ class Unit:
     # attack and defense cost should already be computed
     def OtherCost(self):
         self.otherCost = self.globalAdd
+        # For transporter, the cost depends on defense, and speed
+        self.otherCost += self.passengers * (self.defenseCost / 150) * (self.speed / 12)
         self.otherCost += (self.attackCost + self.defenseCost) * self.globalMultiplier
         self.otherCost = int(round(self.otherCost))
 
@@ -284,6 +289,7 @@ class Unit:
         self.tough = 1
         self.defense = self.basedefense
         self.spEquipments = []
+        self.passengers = 0
 
         specialRules = self.specialRules + self.wargearSp
 
@@ -332,6 +338,9 @@ class Unit:
         for s in specialRules:
             if s.startswith('Tough'):
                 self.tough = int(s[6:-1])
+            elif s.startswith('Transport'):
+                self.passengers = int(s[10:-1])
+
         if 'Regeneration' in specialRules:
             self.tough *= 4 / 3
 
