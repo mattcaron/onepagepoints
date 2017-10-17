@@ -2,6 +2,7 @@ FACTIONS = Tao Robot_Legions
 
 TEX := $(foreach d,$(FACTIONS),$(wildcard $(d)/*.tex))
 PDF := $(TEX:.tex=.pdf)
+PYTHONS := $(wildcard *.py)
 
 CLEAN := $(foreach d,$(FACTIONS),$(wildcard $(d)/*.csv) $(wildcard $(d)/*.pdf))
 
@@ -15,7 +16,11 @@ clean: $(CLEAN)
 	@echo Removing $(CLEAN)
 	@rm -f $(CLEAN)
 
-%.pdf : %.tex
+indent:
+	@python3 indentjson.py $(FACTIONS)
+
+# pdf dependency is the tex file, all faction json files, and all python scripts
+%.pdf : %.tex $(PYTHONS)
 	@rm -f $(@D)/*.csv
 	@python3 onepagebatch.py $(@D)
 	@cd $(@D) && xelatex -interaction=batchmode -halt-on-error $(notdir $<)
