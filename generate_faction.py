@@ -96,7 +96,8 @@ def parse_equipment(equipment):
 
 
 def parse_upgrades(upgrades):
-    return [up.strip(string.whitespace + '-') for up in upgrades.split(',')]
+    tmp = [up.strip() for up in upgrades.split(',')]
+    return [up for up in tmp if up != '-']
 
 
 def parse_special(special):
