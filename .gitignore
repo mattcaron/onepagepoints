@@ -126,3 +126,5 @@ ENV/
 *.pdf
 *.synctex.gz
 *.csv
+# indentjson.py temporary backup
+*.json~
