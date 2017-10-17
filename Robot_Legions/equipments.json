@@ -34,11 +34,11 @@
 "Wrist-Mounted Flamer"         : { "range" : 12, "attacks" : 6 , "ap" : 0 , "special" : []},
 "Wrist-Mounted Laser Cannon"   : { "range" : 48, "attacks" : 1 , "ap" : 6 , "special" : ["Deadly", "Limited"]}
 }, "wargear" : {
-"Bot Fabricator"               : {"special": ["Bot Fabricator"], "weapons": []},
-"Gloom Protocol"               : {"special": ["Gloom"], "weapons": []},
-"Jetpacks"                     : {"special": ["Ambush", "Flying"], "weapons": []},
-"Repair Protocol"              : {"special": ["Repair Protocol"], "weapons": []},
-"Shields"                      : {"special": ["Defense+1"], "weapons": []}
+"Bot Fabricator"               : {"special": ["Bot Fabricator"]},
+"Gloom Protocol"               : {"special": ["Gloom"]},
+"Jetpacks"                     : {"special": ["Ambush", "Flying"]},
+"Repair Protocol"              : {"special": ["Repair Protocol"]},
+"Shields"                      : {"special": ["Defense+1"]}
 }, "factionRules" : {
 "Bot Fabricator"               : 100,
 "Gloom"                        : 10,
