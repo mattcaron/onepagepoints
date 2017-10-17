@@ -251,16 +251,14 @@ class Unit:
 
     def AttackCost(self):
         self.attackCost = 0
-        quality = self.quality
-        if 'Good Shot' in self.specialRules + self.wargearSp:
-            quality = 4
+
         for w in self.equipments + self.spEquipments:
-            self.attackCost += w.Cost(self.speed, quality) * self.count
+            self.attackCost += w.Cost(self.speed, self.attackQuality) * self.count
 
         self.attackCost = int(round(self.attackCost))
 
     def DefenseCost(self):
-        self.defenseCost = quality_defense_factor(self.quality) * defense_cost(self.defense) * self.tough
+        self.defenseCost = quality_defense_factor(self.defenseQuality) * defense_cost(self.defense) * self.tough
         # include speed to defense cost. hardened target which move fast are critical to control objectives.
         self.defenseCost *= (self.speed + 24) / (36)
         self.defenseCost *= adjust_defense_cost * self.count
@@ -290,6 +288,8 @@ class Unit:
         self.defense = self.basedefense
         self.spEquipments = []
         self.passengers = 0
+        self.attackQuality = self.quality
+        self.defenseQuality = self.quality
 
         specialRules = self.specialRules + self.wargearSp
 
@@ -311,9 +311,15 @@ class Unit:
             self.speed = 18
         if 'Slow' in specialRules:
             self.speed = 8
+        if 'Defense+1' in specialRules:
+            self.defense += 1
         if 'Stealth' in specialRules:
             # Stealth is like +0.5 def, because it works only against ranged attack
             self.defense += 0.5
+        if 'Good Shot' in specialRules:
+            self.attackQuality = 4
+        if 'Fearless' in specialRules:
+            self.defenseQuality -= 1
 
         if 'Ambush' in specialRules:
             if 'Scout' in specialRules:
