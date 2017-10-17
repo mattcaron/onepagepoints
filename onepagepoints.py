@@ -242,7 +242,10 @@ class Unit:
 
     def RemoveEquipment(self, equipments):
         for e in equipments:
-            self.equipments.remove(e)
+            if e not in self.equipments:
+                print("ERROR '{0}' not in current equipments '{1}'".format(e, self.equipments))
+            else:
+                self.equipments.remove(e)
         self.Update()
 
     def SetCount(self, count):
