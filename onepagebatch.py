@@ -157,7 +157,7 @@ def generateFaction():
 
     armory = Armory()
     armory.add([Weapon(name, w['range'], w['attacks'], w['ap'], w['special']) for name, w in jequipments['weapons'].items()])
-    armory.add([WarGear(name, wargear.get('special', []), armory.get(wargear.get('weapons', []))) for name, wargear in jequipments['wargear'].items()])
+    armory.add([WarGear(name, wargear.get('special', []), armory.get(wargear.get('weapons', [])), wargear.get('text', '')) for name, wargear in jequipments['wargear'].items()])
 
     factionRules = jequipments['factionRules']
 

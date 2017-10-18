@@ -65,14 +65,18 @@ def range_cost(wrange, speed):
 # WargGear can include special rules for model, and weapons
 # Like a jetbike gives "fast" rules and a Linked ShardGun
 class WarGear:
-    def __init__(self, name='Unknown Gear', specialRules=[], weapons=[]):
+    def __init__(self, name='Unknown Gear', specialRules=[], weapons=[], text=''):
         self.name = name
         self.specialRules = specialRules
         self.weapons = weapons
+        self.text = text
 
     def __str__(self):
         s = self.name + ' ('
-        s += ', '.join(self.specialRules + [str(w) for w in self.weapons])
+        if self.text:
+            s += self.text
+        else:
+            s += ', '.join(self.specialRules + [str(w) for w in self.weapons])
         return s + ')'
 
     def Cost(self, speed, quality):
