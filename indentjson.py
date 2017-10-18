@@ -34,7 +34,7 @@ import argparse
 
 
 def format_weapon(w):
-    s = '{{ "range" : {:<2}, "attacks" : {:<2}, "ap" : {:<2}, "special" : {}}}'.format(w['range'], w['attacks'], w['ap'], json.dumps(w['special']))
+    s = '{{ "range" : {:>2}, "attacks" : {:>2}, "ap" : {:>2}, "special" : {}}}'.format(w['range'], w['attacks'], w['ap'], json.dumps(w['special']))
     return s
 
 

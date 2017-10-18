@@ -87,7 +87,7 @@ class Weapon:
     def __init__(self, name='Unknown Weapon', range=0, attacks=0, armorPiercing=0, weaponRules=[]):
         self.name = name
         self.range = range
-        self.attacks = attacks
+        self.attacks = str(attacks)
         self.armorPiercing = armorPiercing
         self.weaponRules = weaponRules
         self.specialRules = []
@@ -122,6 +122,11 @@ class Weapon:
         rending = 0
         wrange = self.range
         ap = self.armorPiercing
+        # Handle D3 or D6 attacks
+        if self.attacks.isdigit():
+            attacks = int(self.attacks)
+        elif self.attacks.startswith('D'):
+            attacks = (float(self.attacks[1:]) + 1.0) / 2.0
 
         for s in self.weaponRules:
             if s == 'Deadly':
@@ -149,7 +154,7 @@ class Weapon:
             elif s == 'Indirect':
                 wrange *= 1.4
 
-        self.cost = sfactor * self.attacks * range_cost(wrange, speed) * (ap_cost(ap) * quality_attack_factor(quality) + rending)
+        self.cost = sfactor * attacks * range_cost(wrange, speed) * (ap_cost(ap) * quality_attack_factor(quality) + rending)
         # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
         if simpact:
             self.cost += 0.5 * simpact * sfactor * ap_cost(ap) * range_cost(wrange, speed)
