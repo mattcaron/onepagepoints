@@ -34,7 +34,7 @@
 		\setlength\tabcolsep{3 pt}
 		\rowcolors{1}{white}{lgrey}
 		\footnotesize
-		\begin{tabu} to \linewidth {lccX[2]>{\raggedright}X[1]cc}
+		\begin{tabu} to \linewidth {lccX[3]>{\raggedright}X[2]cc}
 			\bf Name [size]& \bf Qua& \bf Def& \bf Equipment& \bf Special Rules& \bf Upgrades& \bf Cost\\
 			\csvreader[no head, late after line=\\, /csv/separator=semicolon ]{units#1.csv}{}
 			{\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii}
