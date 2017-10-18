@@ -50,7 +50,9 @@
 "Dread"                        : 10,
 "Flame"                        : 40,
 "Gloom"                        : 10,
+"Hunter"                       : 30,
 "Nightmare"                    : 15,
+"Regen-Protocol"               : 40,
 "Repair Protocol"              : 10,
 "Solar"                        : 15
 }}
