@@ -8,18 +8,35 @@
 \usepackage[table]{xcolor}
 \usepackage{multicol}
 \usepackage{fontspec}
+
+\usepackage{hyperref}
+% Hack to get url in blue with underline
+\hypersetup{colorlinks,urlcolor=blue,urlbordercolor=blue}
+
+\urlstyle{same}
+
+\makeatletter
+\Hy@AtBeginDocument{
+	\def\@pdfborderstyle{/S/U/W 1}
+}
+\makeatother
+
 \setmainfont{Carlito}
 
-\author{by Gaetano Ferrara (http://onepagerules.wordpress.com/) and modified by Jocelyn Falempe}
+\author{by \textbf{Gaetano Ferrara} (\small\url{http://onepagerules.wordpress.com/}\normalsize)\\ and  \textbf{Jocelyn Falempe} (\small\url{https://github.com/kdj0c/onepagepoints}\normalsize)}
 \date{}
 
 \definecolor{lgrey}{rgb}{0.82, 0.82, 0.82}
+
+\newcommand{\mytitle}[1]{
+	\title{\vspace{-1.5cm}Grimdark Future - #1 \vspace{-0.5cm}}
+}
 
 \newcommand{\UpgradeGroup}[2]{
 	\hyphenpenalty=100000
 	\setlength\tabcolsep{3 pt}
 	\footnotesize
-	
+
 	\vspace{6pt}
 	\rowcolors{1}{white}{lgrey}
 	\begin{tabu} to \linewidth {Xc}
@@ -40,4 +57,15 @@
 			{\csvcoli\space[\csvcolii]&\csvcoliii+&\csvcoliv+&\csvcolv&\csvcolvi&\csvcolvii&\csvcolviii}
 		\end{tabu}
 	\end{center}
+}
+
+\newcommand{\specialrules}{
+	\centering
+	\subsection*{Special Rules}
+	\raggedright
+	\raggedbottom
+}
+
+\newcommand{\sprule}[2]{
+	\vbox{\textbf{#1:} #2 \newline}
 }
