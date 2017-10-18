@@ -9,7 +9,7 @@
 }],
 "B" : [{
       "text" : "Upgrade with any",
-      "add" : [["Gloom Protocol"]]
+      "add" : [["Gloom Protocol"], ["Dread Protocol"], ["Nightmare Protocol"], ["Solar Protocol"], ["Darkness Protocol"], ["Flame Protocol"]]
 }],
 "C" : [{
       "text" : "Replace all Energy Rods",

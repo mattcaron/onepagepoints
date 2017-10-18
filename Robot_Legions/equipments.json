@@ -35,12 +35,22 @@
 "Wrist-Mounted Laser Cannon"   : { "range" : 48, "attacks" :  1, "ap" :  6, "special" : ["Deadly", "Limited"]}
 }, "wargear" : {
 "Bot Fabricator"               : {"special": ["Bot Fabricator"]},
-"Gloom Protocol"               : {"special": ["Gloom"]},
+"Darkness Protocol"            : {"special": ["Darkness"], "text": "The hero and his unit get the Ambush special rule"},
+"Dread Protocol"               : {"special": ["Dread"], "text": "When the hero is activated, target enemy unit within 18\" must take a morale test"},
+"Flame Protocol"               : {"special": ["Flame"], "text": "When activated target enemy unit within 12\" takes D6 automatic hits with AP(3)"},
+"Gloom Protocol"               : {"special": ["Gloom"], "text": "The hero and his unit get the Fearless special rule"},
 "Jetpacks"                     : {"special": ["Ambush", "Flying"]},
+"Nightmare Protocol"           : {"special": ["Nightmare"], "text": "The hero and his unit get the Fear special rule"},
 "Repair Protocol"              : {"special": ["Repair Protocol"]},
-"Shields"                      : {"special": ["Defense+1"]}
+"Shields"                      : {"special": ["Defense+1"]},
+"Solar Protocol"               : {"special": ["Solar"], "text": "When activated target enemy unit within 12\" takes D3 automatic hits with AP(1)"}
 }, "factionRules" : {
 "Bot Fabricator"               : 100,
+"Darkness"                     : 30,
+"Dread"                        : 10,
+"Flame"                        : 40,
 "Gloom"                        : 10,
-"Repair Protocol"              : 10
+"Nightmare"                    : 15,
+"Repair Protocol"              : 10,
+"Solar"                        : 15
 }}
