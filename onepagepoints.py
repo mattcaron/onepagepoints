@@ -151,12 +151,17 @@ class Weapon:
                 quality = 1
             elif s == 'Limited':
                 sfactor /= 2
+            elif s == 'Secondary':
+                sfactor /= 4
             elif s == 'Sniper':
                 # Sniper is 2+ hit and ignore cover (so statistically half an ap)
                 quality = 2
                 ap += 0.5
             elif s == 'Indirect':
                 wrange *= 1.4
+            elif s == 'Vibration':
+                # Vibration weapons have AP(D6), so same cost as AP(4) looks fair
+                ap = 4
 
         self.cost = sfactor * attacks * range_cost(wrange, speed) * (ap_cost(ap) * quality_attack_factor(quality) + rending)
         # Impact weapon have automatic hit, but only when charging (so 0.5 cost of the same weapon without quality factor)
@@ -164,7 +169,6 @@ class Weapon:
             self.cost += 0.5 * simpact * sfactor * ap_cost(ap) * range_cost(wrange, speed)
 
         self.cost = int(round(self.cost * adjust_attack_cost))
-
         return self.cost
 
 
