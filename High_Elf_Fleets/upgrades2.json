@@ -1,0 +1,6 @@
+{
+"A" : [{
+      "text" : "Replace Linked Shardgun",
+      "remove" : ["Linked Shardgun"],
+      "add" : [["Shard Cannon"]]
+}]}

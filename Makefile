@@ -1,4 +1,4 @@
-FACTIONS = Tao Robot_Legions
+FACTIONS = Tao Robot_Legions High_Elf_Fleets
 
 TEX := $(foreach d,$(FACTIONS),$(wildcard $(d)/*.tex))
 TEMPLATE := $(wildcard template/*.sty)
