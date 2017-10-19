@@ -327,8 +327,6 @@ class Unit:
             self.speed = 18
         if 'Slow' in specialRules:
             self.speed = 8
-        if 'Defense+1' in specialRules:
-            self.defense += 1
         if 'Stealth' in specialRules:
             # Stealth is like +0.5 def, because it works only against ranged attack
             self.defense += 0.5
@@ -362,6 +360,10 @@ class Unit:
                 self.tough = int(s[6:-1])
             elif s.startswith('Transport'):
                 self.passengers = int(s[10:-1])
+            elif s.startswith('Psychic'):
+                self.globalAdd += int(s[8:-1]) * 7
+            elif s.startswith('Defense+'):
+                self.defense += int(s[8:])
 
         if 'Regeneration' in specialRules:
             self.tough *= 4 / 3
