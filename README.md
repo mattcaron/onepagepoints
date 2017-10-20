@@ -36,3 +36,7 @@ $ `make Tao`
 
 to indent all json files :
 $ `make indent`
+
+# Tricks
+
+Sometime xelatex fails randomly. it occurs when it doesn't have enough RAM. I have 4G RAM without swap, and if I have too much tabs in Firefox, xelatex will fail wit random error.
