@@ -8,6 +8,7 @@
 \usepackage[table]{xcolor}
 \usepackage{multicol}
 \usepackage{fontspec}
+\usepackage{pgffor}
 
 \usepackage{hyperref}
 % Hack to get url in blue with underline
@@ -48,6 +49,14 @@
 	\end{tabu}
 }
 
+% Generate the table for all upgrade groups, from A to #2 (second parameter).
+% First parameter is the page number, for faction with more than 1 page.
+\newcommand{\UpgradeGroups}[2]{
+\foreach \x in {A,...,#2} {\UpgradeGroup{#1}{\x}}
+}
+
+% Generate the table with all units and their stats.
+% First parameter is the page number, for faction with more than 1 page.
 \newcommand{\UnitTable}[1]{
 	\begin{center}
 		\hyphenpenalty=100000
@@ -62,6 +71,7 @@
 	\end{center}
 }
 
+% Start a section with special rules
 \newcommand{\specialrules}{
 	\centering
 	\subsection*{Special Rules}
@@ -69,6 +79,9 @@
 	\raggedbottom
 }
 
+% All special rules should use this function.
+% First parameter is rule name.
+% Second parameter is rule explanations.
 \newcommand{\sprule}[2]{
 	\vbox{\textbf{#1:} #2 \newline}
 }
