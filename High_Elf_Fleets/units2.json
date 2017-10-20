@@ -27,7 +27,7 @@
   "count" : 1,
   "quality" : 3,
   "defense" : 6,
-  "equipment" : ["2x Star Cannons", "Walker Stomp"],
+  "equipment" : ["2x Star Cannon", "Walker Stomp"],
   "special" : ["Fast", "Scout", "Tough(3)", "Vehicle"],
   "upgrades" : ["C", "D"]
 },{

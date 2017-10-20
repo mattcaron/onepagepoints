@@ -52,6 +52,7 @@
 "Banshee Helmet"               : {"special": ["Fear"]},
 "Enhanced Psy Helmet"          : {"special": ["Psychic(3)"]},
 "Hawk Wings"                   : {"special": ["Ambush", "Flying"]},
+"Hologram Field"               : {"special": ["Stealth"]},
 "Jetbike"                      : {"special": ["Strider", "Very Fast"], "weapons": ["Linked Shardgun"]},
 "Psy Helmet"                   : {"special": ["Psychic(2)"]},
 "Shield"                       : {"special": ["Regeneration"]},
