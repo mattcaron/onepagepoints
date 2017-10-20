@@ -23,6 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from onepagepoints import Weapon, WarGear, Unit
 
+
 # due to rounding error, check if a == b (+-1)
 def equalround(a, b):
     if a - b < 2 and b - a < 2:
@@ -37,6 +38,7 @@ def test_Weapon_attacks():
     dknife = Weapon('Dknife', 12, 2, 0)
     assert (equalround(knife.Cost(12, 4) * 2, dknife.Cost(12, 4)))
 
+
 # check that 5+ quality weapon is twice the cost of 6+
 def test_Weapon_quality():
     knife = Weapon('Dummy', 12, 12, 8)
@@ -48,6 +50,7 @@ def test_Weapon_rending():
     knife = Weapon('Dummy', 12, 12, 8)
     rknife = Weapon('Dummy', 12, 12, 0, ['Rending'])
     assert (equalround(knife.Cost(12, 6), rknife.Cost(12, 6)))
+
 
 # Cost of linked weapon is like having +1 in quality
 def test_Weapon_linked():

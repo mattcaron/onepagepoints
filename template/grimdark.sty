@@ -92,3 +92,28 @@
 \newcommand{\sprule}[2]{
 	\vbox{\textbf{#1:} #2 \newline}
 }
+
+% Start a section with psychic spells
+% #1 is list of spell, using \psychic
+\newcommand{\startpsychic}[1]{
+	\centering
+	\subsection*{Psychic Spells}
+	\raggedright
+	\raggedbottom
+	\hyphenpenalty=100000
+	\footnotesize
+
+	\tabulinesep=1mm
+	\rowcolors{1}{lgrey}{white}
+	\begin{tabu} to \linewidth {X}
+	#1
+	\end{tabu}
+}
+
+% Psychic spell templates
+% #1 is spell name
+% #2 is spell difficulty
+% #3 is spell description
+\newcommand{\psychic}[3]{
+	\textbf{#1 (#2):} #3 \\
+}
