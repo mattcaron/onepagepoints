@@ -8,8 +8,14 @@ PYTHONS := $(wildcard *.py)
 
 CLEAN := $(foreach d,$(FACTIONS),$(wildcard $(d)/*.csv) $(wildcard $(d)/*.pdf))
 
+# $(1) is Faction, $(2) is Faction/*.json
+# so Faction/Faction.pdf will depend on all Faction/*.json
+# and Faction will depend on out/Faction.pdf
 define add_dep =
-$(1): $(2)
+$(1)/$(1).pdf: $(2)
+
+.PHONY : $(1)
+$(1): out/$(1).pdf
 endef
 
 define copy_out =
@@ -40,4 +46,4 @@ out:
 $(foreach f,$(PDF),$(eval $(call copy_out,$(addprefix out/,$(notdir $(f))),$(f))))
 
 # add dependency to all json found in faction directory
-$(foreach d,$(FACTIONS),$(eval $(call add_dep,$(d)/$(d).pdf,$(wildcard $(d)/*.json))))
+$(foreach d,$(FACTIONS),$(eval $(call add_dep,$(d),$(wildcard $(d)/*.json))))
