@@ -141,7 +141,7 @@ def write_upgrade_csv(jupgrades, upgradeFile):
         for group, upgrades in jupgrades.items():
             f.write(group + ' | ')
             for up in upgrades:
-                f.write(up['text'] + ';;' + group + '\n')
+                f.write(up['text'] + ':;;' + group + '\n')
                 cost = calculate_mean_upgrade_cost(up['cost'])
                 for i, addEqu in enumerate(up['add']):
                     f.write('{0};{1};{2}\n'.format('\\newline '.join(prettyEquipments(armory.get(addEqu))), points(cost[i]), group))

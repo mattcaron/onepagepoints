@@ -1,7 +1,7 @@
 \ProvidesPackage{grimdark}
 
 \usepackage{comment}
-\usepackage[margin=1cm]{geometry}
+\usepackage[includeheadfoot,margin=0.7cm,top=0.5cm,bottom=0.7cm,headsep=0.2cm]{geometry}
 
 \usepackage{tabu}
 \usepackage{csvsimple}
@@ -9,6 +9,7 @@
 \usepackage{multicol}
 \usepackage{fontspec}
 \usepackage{pgffor}
+\usepackage{fancyhdr}
 
 \usepackage{hyperref}
 % Hack to get url in blue with underline
@@ -27,13 +28,18 @@
 % Remove page number
 \pagenumbering{gobble}
 
-\author{by \textbf{Gaetano Ferrara} (\small\url{http://onepagerules.wordpress.com/}\normalsize)\\ and  \textbf{Jocelyn Falempe} (\small\url{https://github.com/kdj0c/onepagepoints}\normalsize)}
-\date{}
+\pagestyle{fancy}
 
 \definecolor{lgrey}{rgb}{0.82, 0.82, 0.82}
 
 \newcommand{\mytitle}[1]{
-	\title{\vspace{-1.5cm}Grimdark Future - #1 \vspace{-0.5cm}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{40pt}
+
+\chead{
+	\LARGE \textbf{Grimdark Future - #1}\\
+	\normalsize by \textbf{Gaetano Ferrara} (\small\url{http://onepagerules.wordpress.com/}\normalsize)\\
+	and  \textbf{Jocelyn Falempe} (\small\url{https://github.com/kdj0c/onepagepoints}\normalsize)}
 }
 
 \newcommand{\UpgradeGroup}[2]{
@@ -77,6 +83,7 @@
 	\subsection*{Special Rules}
 	\raggedright
 	\raggedbottom
+	\footnotesize
 }
 
 % All special rules should use this function.

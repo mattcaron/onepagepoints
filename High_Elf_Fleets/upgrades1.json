@@ -33,7 +33,7 @@
       "add" : [["Jetbike"]]
 }],
 "D" : [{
-      "text" : "Upgrade with one gun platform, equipped with",
+      "text" : "Add one Gun Platform, equipped with",
       "add" : [["Star Cannon"], ["Shard Cannon"], ["Scatter Laser"], ["Missile Launcher AT", "Missile Launcher HE"], ["Laser Lance"]]
 }],
 "E" : [{
