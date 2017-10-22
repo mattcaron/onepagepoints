@@ -9,7 +9,8 @@ Tested only with python 3.7 on Archlinux. It should work everywhere you can run 
 
 # Dependencies :
 
-To generate the pdf, you need xelatex, with a few plugins, a recent version of csvsimple, best is to install from ctan at https://www.tug.org/texlive/quickinstall.html)
+To generate the pdf, you need xelatex, with a few plugins, a recent version of csvsimple (1.12 is too old, 1.20 works), If you get an error about "I do not know the key '/csv/filter strcmp'", then you need a newer csvsimple.
+The best is to install from ctan at https://www.tug.org/texlive/quickinstall.html)
 You also need make, to build everything
 
 If you want to create a new faction, you need also pyexcel-ods3 (you can install it with "sudo pip install pyexcel-ods3")
@@ -39,4 +40,4 @@ $ `make indent`
 
 # Tricks
 
-Sometime xelatex fails randomly. it occurs when it doesn't have enough RAM. I have 4G RAM without swap, and if I have too much tabs in Firefox, xelatex will fail wit random error.
+Sometime xelatex fails randomly. it occurs when it doesn't have enough RAM. I have 4G RAM without swap, and if I have too much tabs in Firefox, xelatex will fail with random error.
