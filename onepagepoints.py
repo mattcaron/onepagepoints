@@ -24,13 +24,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import copy
 
 # Adjust defense and attack cost, to match onepagerules current prices
-adjust_defense_cost = 0.8
-adjust_attack_cost = 0.8
+adjust_defense_cost = 0.7
+adjust_attack_cost = 0.7
 
 
 # Cost per defense point (2+ => 6, 6+ => 24, 10+ => 58)
 def defense_cost(d):
-    return (d * d + d + 6.0) / 2.0
+    return (0.9 * d * d + d + 10.0) / 2.0
 
 
 # defense cost multiplier (higher quality units are tougher, due to moral test)
