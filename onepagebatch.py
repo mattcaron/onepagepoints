@@ -60,21 +60,24 @@ def prettyEquipments(equipments):
 # Calculate the cost of an upgrade on a unit
 # If the upgrade is only for one model, set the unit count to 1
 # remove equipment, add new equipment and calculate the new cost.
-def calculate_upgrade_cost(unit, to_remove, to_add, all):
+def calculate_upgrade_cost(unit, to_preremove, to_preadd, to_remove, to_add, all):
     global armory
 
     new_unit = copy.copy(unit)
     if not all:
         new_unit.SetCount(1)
 
+    new_unit.RemoveEquipments(armory.get(to_preremove))
+    new_unit.AddEquipments(armory.get(to_preadd))
+
     prev_cost = new_unit.cost + getFactionCost(unit)
 
-    new_unit.RemoveEquipment(armory.get(to_remove))
+    new_unit.RemoveEquipments(armory.get(to_remove))
 
     costs = []
     for upgrade in to_add:
         add_unit = copy.copy(new_unit)
-        add_unit.AddEquipment(armory.get(upgrade))
+        add_unit.AddEquipments(armory.get(upgrade))
 
         up_cost = add_unit.cost + getFactionCost(add_unit) - prev_cost
         costs.append(up_cost)
@@ -84,9 +87,11 @@ def calculate_upgrade_cost(unit, to_remove, to_add, all):
 def calculate_upgrade_group_cost(unit, upgrade_group):
     for upgrade_batch in upgrade_group:
         all = upgrade_batch.get('all', False)
+        to_preremove = upgrade_batch.get('pre-remove', {})
+        to_preadd = upgrade_batch.get('pre-add', {})
         to_remove = upgrade_batch.get('remove', {})
         to_add = upgrade_batch['add']
-        costs = calculate_upgrade_cost(unit, to_remove, to_add, all)
+        costs = calculate_upgrade_cost(unit, to_preremove, to_preadd, to_remove, to_add, all)
         if 'cost' in upgrade_batch:
             upgrade_batch['cost'].append(costs)
         else:

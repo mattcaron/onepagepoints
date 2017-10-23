@@ -21,16 +21,16 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
+import os
+import json
+import argparse
+
 """
 This scripts helps to indent the json files for each faction
 equipments.json (list of weapons and wargear)
 unitsX.json (list of units for page X)
 upgradesX.json (list of upgrades available for each unit in page X)
 """
-
-import os
-import json
-import argparse
 
 
 def format_weapon(w):
@@ -87,8 +87,13 @@ def format_batch(batch):
     s = '      "text" : "{}",\n'.format(batch['text'])
     if 'all' in batch and batch['all']:
         s += '      "all" : true,\n'
+    if 'pre-remove' in batch:
+        s += '      "pre-remove" : {},\n'.format(json.dumps(batch['pre-remove']))
+    if 'pre-add' in batch:
+        s += '      "pre-add" : {},\n'.format(json.dumps(batch['pre-add']))
     if 'remove' in batch:
         s += '      "remove" : {},\n'.format(json.dumps(batch['remove']))
+
     s += '      "add" : {}\n'.format(json.dumps(batch['add']))
     return s
 

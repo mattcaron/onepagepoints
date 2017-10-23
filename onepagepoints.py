@@ -249,16 +249,28 @@ class Unit:
         self.parseSpecialRules()
         self.Cost()
 
-    def AddEquipment(self, equipments):
+    def AddEquipments(self, equipments):
         self.equipments += equipments
         self.Update()
 
-    def RemoveEquipment(self, equipments):
+    def RemoveEquipment(self, e):
+        if e in self.equipments:
+            self.equipments.remove(e)
+            return
+
+        if e.name.endswith('s'):
+            singular = e.name[:-1]
+            for equ in self.equipments:
+                if singular == equ.name:
+                    self.equipments.remove(equ)
+                return
+
+        print("ERROR unit {0}, '{1}' not in current equipments '{2}'".format(self.name, e, self.equipments))
+
+    def RemoveEquipments(self, equipments):
         for e in equipments:
-            if e not in self.equipments:
-                print("ERROR '{0}' not in current equipments '{1}'".format(e, self.equipments))
-            else:
-                self.equipments.remove(e)
+            self.RemoveEquipment(e)
+
         self.Update()
 
     def SetCount(self, count):
