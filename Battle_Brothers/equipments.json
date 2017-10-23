@@ -1,0 +1,36 @@
+{"weapons" : {
+"Assault Rifle"                : { "range" : 24, "attacks" :  1, "ap" :  0, "special" : []},
+"Assault Rifle Array"          : { "range" : 24, "attacks" :  3, "ap" :  0, "special" : ["Linked"]},
+"Autocannon"                   : { "range" : 48, "attacks" :  2, "ap" :  3, "special" : []},
+"CCW"                          : { "range" :  0, "attacks" :  2, "ap" :  0, "special" : []},
+"Death Launcher"               : { "range" : 12, "attacks" :  1, "ap" :  1, "special" : ["Blast(6)"]},
+"Demolition Cannon"            : { "range" : 24, "attacks" :  1, "ap" :  6, "special" : ["Blast(6)"]},
+"Energy Fist"                  : { "range" :  0, "attacks" :  2, "ap" :  4, "special" : []},
+"Energy Hammers"               : { "range" :  0, "attacks" :  2, "ap" :  5, "special" : []},
+"Energy Sword"                 : { "range" :  0, "attacks" :  2, "ap" :  2, "special" : []},
+"Flamethrower"                 : { "range" : 12, "attacks" :  6, "ap" :  0, "special" : []},
+"Flamethrower Cannons"         : { "range" : 12, "attacks" :  6, "ap" :  2, "special" : []},
+"Gravity Cannon"               : { "range" : 24, "attacks" :  4, "ap" :  0, "special" : ["Gravity"]},
+"Gravity Pistol"               : { "range" : 12, "attacks" :  1, "ap" :  0, "special" : ["Gravity"]},
+"Gravity Rifle"                : { "range" : 18, "attacks" :  1, "ap" :  0, "special" : ["Gravity", "Limited"]},
+"Hammer Missiles"              : { "range" : 48, "attacks" :  3, "ap" :  3, "special" : []},
+"Heavy Flamethrower"           : { "range" : 12, "attacks" :  6, "ap" :  1, "special" : []},
+"Heavy Fusion Rifle"           : { "range" : 24, "attacks" :  1, "ap" :  7, "special" : ["Deadly"]},
+"Heavy Machinegun"             : { "range" : 36, "attacks" :  3, "ap" :  1, "special" : []},
+"Hunter Missile"               : { "range" : 48, "attacks" :  1, "ap" :  4, "special" : ["Deadly", "Limited"]},
+"Laser Cannon"                 : { "range" : 48, "attacks" :  1, "ap" :  5, "special" : ["Deadly"]},
+"Laser Talon"                  : { "range" : 24, "attacks" :  2, "ap" :  5, "special" : ["Deadly"]},
+"Minigun"                      : { "range" : 24, "attacks" :  4, "ap" :  2, "special" : ["Rending"]},
+"Pistol"                       : { "range" : 12, "attacks" :  1, "ap" :  0, "special" : []},
+"Plasma Cannon"                : { "range" : 36, "attacks" :  1, "ap" :  3, "special" : ["Blast(3)"]},
+"Plasma Pistol"                : { "range" : 12, "attacks" :  1, "ap" :  3, "special" : []},
+"Shotgun"                      : { "range" : 12, "attacks" :  2, "ap" :  0, "special" : []},
+"Storm Missile"                : { "range" : 48, "attacks" :  1, "ap" :  4, "special" : ["Deadly", "Limited"]},
+"Storm Rifle"                  : { "range" : 24, "attacks" :  2, "ap" :  0, "special" : []},
+"Walker Fist"                  : { "range" :  0, "attacks" :  4, "ap" :  6, "special" : []},
+"Wind Missile Launcher"        : { "range" : 48, "attacks" :  1, "ap" :  1, "special" : ["Blast(6)", "Indirect"]}
+}, "wargear" : {
+
+}, "factionRules" : {
+
+}}

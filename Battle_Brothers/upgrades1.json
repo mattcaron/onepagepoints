@@ -1,0 +1,18 @@
+{
+"A" : [{
+      "text" : "Replace one Assault Rifle",
+      "remove" : ["Assault Rifles"],
+      "add" : [["Pistol", "CCW"]]
+    },{
+      "text" : "Replace one Pistol",
+      "pre-remove" : ["Assault Rifles"],
+      "pre-add" : ["Pistol", "CCW"],
+      "remove" : ["Pistol"],
+      "add" : [["Plasma Pistol"], ["Gravity Pistol"], ["Storm Rifle"]]
+    },{
+      "text" : "Replace one CCW",
+      "pre-remove" : ["Assault Rifles"],
+      "pre-add" : ["Pistol", "CCW"],
+      "remove" : ["CCW"],
+      "add" : [["Energy Sword"], ["Energy Fist"]]
+}]}
