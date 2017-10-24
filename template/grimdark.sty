@@ -1,7 +1,7 @@
 \ProvidesPackage{grimdark}
 
 \usepackage{comment}
-\usepackage[includeheadfoot,margin=0.7cm,top=0.5cm,bottom=0.7cm,headsep=0.2cm]{geometry}
+\usepackage[includeheadfoot,margin=0.7cm,top=0.3cm,bottom=0.7cm,headsep=0.2cm]{geometry}
 
 \usepackage{tabu}
 \usepackage{csvsimple}
@@ -48,7 +48,7 @@
 
 \newcommand{\UpgradeGroup}[2]{
 	\hyphenpenalty=100000
-	\setlength\tabcolsep{3 pt}
+	\setlength\tabcolsep{1 pt}
 	\footnotesize
 
 	\vspace{1pt}
@@ -70,7 +70,7 @@
 \newcommand{\UnitTable}[1]{
 	\begin{center}
 		\hyphenpenalty=100000
-		\setlength\tabcolsep{3 pt}
+		\setlength\tabcolsep{2 pt}
 		\rowcolors{1}{white}{lgrey}
 		\footnotesize
 		\begin{tabu} to \linewidth {lccX[3]>{\raggedright}X[2]cc}
@@ -107,7 +107,8 @@
 	\hyphenpenalty=100000
 	\footnotesize
 
-	\tabulinesep=1mm
+	\tabulinesep=2pt
+	\setlength\tabcolsep{2 pt}
 	\rowcolors{1}{lgrey}{white}
 	\begin{tabu} to \linewidth {X}
 	#1
