@@ -11,8 +11,8 @@
   "count" : 1,
   "quality" : 3,
   "defense" : 4,
-  "equipment" : ["Shard Pistol", "Energy Dagger", "Psy Helmet"],
-  "special" : ["Fast", "Hero", "Tough(3)"],
+  "equipment" : ["Shard Pistol", "Energy Dagger"],
+  "special" : ["Fast", "Hero", "Tough(3)", "Psychic(2)"],
   "upgrades" : ["B"]
 },{
   "name" : "Seer Council",

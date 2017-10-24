@@ -50,11 +50,10 @@
 "Wraith Cannon"                : { "range" : 12, "attacks" :  1, "ap" :  6, "special" : ["Rending"]}
 }, "wargear" : {
 "Banshee Helmet"               : {"special": ["Fear"]},
-"Enhanced Psy Helmet"          : {"special": ["Psychic(3)"]},
 "Hawk Wings"                   : {"special": ["Ambush", "Flying"]},
 "Hologram Field"               : {"special": ["Stealth"]},
 "Jetbike"                      : {"special": ["Strider", "Very Fast"], "weapons": ["Linked Shardgun"]},
-"Psy Helmet"                   : {"special": ["Psychic(2)"]},
+"Psy Helmet"                   : {"special": ["Psychic+1"]},
 "Shield"                       : {"special": ["Regeneration"]},
 "Spider Suit"                  : {"special": ["Teleport"]}
 }, "factionRules" : {

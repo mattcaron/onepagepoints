@@ -12,9 +12,8 @@
       "add" : [["Banshee Helmet"], ["Spider Suit"], ["Hawk Wings"], ["Jetbike"]]
 }],
 "B" : [{
-      "text" : "Replace Psy Helmet with",
-      "remove" : ["Psy Helmet"],
-      "add" : [["Enhanced Psy Helmet"]]
+      "text" : "Update with",
+      "add" : [["Psy Helmet"]]
     },{
       "text" : "Replace Energy Dagger",
       "remove" : ["Energy Dagger"],
