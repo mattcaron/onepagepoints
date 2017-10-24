@@ -118,7 +118,7 @@ def write_unit_csv(junits, outfile):
         for junit in junits:
             unit = Unit.from_dict(junit, armory)
             cost = unit.cost + getFactionCost(unit)
-            equ = "\\newline ".join(prettyEquipments(unit.equipments))
+            equ = ", ".join([ '\mbox{' + e + '}' for e in  prettyEquipments(unit.equipments)])
             sp = ", ".join(unit.specialRules)
             up = ", ".join(junit['upgrades'])
             line = '{0};{1};{2};{3};{4};{5};{6};{7}\n'.format(unit.name, unit.count, unit.quality, unit.basedefense, equ, sp, up, points(cost))
