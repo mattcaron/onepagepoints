@@ -107,8 +107,10 @@ class Weapon:
         s += 'A{0}'.format(self.attacks)
         if self.armorPiercing:
             s += ', AP({0})'.format(self.armorPiercing)
-        if self.weaponRules:
-            s += ', ' + ', '.join(self.weaponRules)
+        # Remove "Linked" special rule if the name contain "Linked"
+        weaponRules = [wr for wr in self.weaponRules if wr != 'Linked' or 'Linked' not in self.name.split()]
+        if weaponRules:
+            s += ', ' + ', '.join(weaponRules)
         s += ')'
         return s
 
