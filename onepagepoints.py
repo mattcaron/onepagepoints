@@ -372,8 +372,10 @@ class Unit:
                 self.tough = int(s[6:-1])
             elif s.startswith('Transport'):
                 self.passengers = int(s[10:-1])
-            elif s.startswith('Psychic'):
+            elif s.startswith('Psychic('):
                 self.globalAdd += int(s[8:-1]) * 7
+            elif s.startswith('Psychic+'):
+                self.globalAdd += int(s[8:]) * 7
             elif s.startswith('Defense+'):
                 self.defense += int(s[8:])
 
