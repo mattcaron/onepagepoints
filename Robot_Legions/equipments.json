@@ -5,6 +5,7 @@
 "Death Beam"                   : { "range" : 24, "attacks" :  1, "ap" :  8, "special" : ["Blast(3)"]},
 "Death Gaze"                   : { "range" : 12, "attacks" :  1, "ap" :  0, "special" : ["Deadly", "Rending"]},
 "Doom Cannon"                  : { "range" : 48, "attacks" :  1, "ap" :  6, "special" : ["Blast(3)"]},
+"EMP Pulse"                    : { "range" : 30, "attacks" :  1, "ap" :  0, "special" : ["Anti-Air", "Deadly", "EMP"]},
 "Energy Blade"                 : { "range" :  0, "attacks" :  2, "ap" :  2, "special" : []},
 "Energy Halberd"               : { "range" :  0, "attacks" :  2, "ap" :  5, "special" : []},
 "Energy Rods"                  : { "range" : 12, "attacks" :  1, "ap" :  1, "special" : []},
